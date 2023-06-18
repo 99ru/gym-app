@@ -23,7 +23,7 @@ const EditDialog: React.FC<EditDialogProps> = ({ reps, weight, onSave, onClose }
         className="fixed inset-0 z-10 overflow-y-auto flex items-center justify-center"
         onClose={onClose}
       >
-        <div className="px-4 min-h-screen text-center">
+        <div className="px-4 text-center">
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
           <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
             <h3 className="text-2xl font-semibold text-black mb-4">Edit Set</h3>

@@ -50,11 +50,11 @@ const SelectMuscle: React.FC<Props> = ({
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => setOpen(false)}
         >
-          <div className="px-4 min-h-screen text-center">
+          <div className="px-4 text-center">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             <span
-              className="inline-block h-screen align-middle"
+              className="inline-block align-middle"
               aria-hidden="true"
             >
               &#8203;
