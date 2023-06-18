@@ -1,13 +1,7 @@
 import { useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
-
-type Workout = {
-  name: string
-  image: string
-  id: number
-  muscle: string
-}
+import { Workout } from '../app/types' 
 
 type Props = {
   workouts: Workout[]
