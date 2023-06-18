@@ -9,7 +9,7 @@ type Props = {
   setShowWorkout: (show: boolean) => void
 }
 
-const FilteredWorkouts: React.FC<Props> = ({
+const SelectMuscle: React.FC<Props> = ({
   workouts,
   setSelectedWorkouts,
   setShowWorkout,
@@ -17,7 +17,7 @@ const FilteredWorkouts: React.FC<Props> = ({
   const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const muscles = ["Shoulders", "Biceps", "Legs", "Back", "Chest"];
-  const filteredWorkouts = selectedMuscle
+  const SelectMuscle = selectedMuscle
     ? workouts.filter((workout) => workout.muscle === selectedMuscle)
     : [];
 
@@ -33,7 +33,7 @@ const FilteredWorkouts: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-wrap justify-center mt-10">
+    <section className="flex flex-wrap justify-center mt-20">
       {muscles.map((muscle) => (
         <button
           key={muscle}
@@ -69,7 +69,7 @@ const FilteredWorkouts: React.FC<Props> = ({
               </Dialog.Title>
 
               <div className="mt-2 space-y-4">
-                {filteredWorkouts.map((workout) => (
+                {SelectMuscle.map((workout) => (
                   <div
                     key={workout.id}
                     className="flex items-center space-x-4 cursor-pointer"
@@ -96,8 +96,8 @@ const FilteredWorkouts: React.FC<Props> = ({
           </div>
         </Dialog>
       </Transition>
-    </div>
+    </section>
   );
 };
 
-export default FilteredWorkouts;
+export default SelectMuscle;

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import AddWorkout from '../components/AddWorkout'
-import FilteredWorkouts from '../components/FilteredWorkouts'
+import SelectMuscle from '../components/SelectMuscle'
 import { Workout } from '../utils/types'
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
   return (
     <>
       {!showWorkout && <AddWorkout showWorkout={showWorkout} setShowWorkout={setShowWorkout} selectedWorkouts={selectedWorkouts} />}
-      {showWorkout && <FilteredWorkouts workouts={data.workouts} setSelectedWorkouts={setSelectedWorkouts} setShowWorkout={setShowWorkout} />}
+      {showWorkout && <SelectMuscle workouts={data.workouts} setSelectedWorkouts={setSelectedWorkouts} setShowWorkout={setShowWorkout} />}
     </>
   )
 }

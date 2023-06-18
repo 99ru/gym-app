@@ -9,10 +9,7 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 nav li {
   cursor: pointer;
 }
-.add-msg{
-  background-color: whitesmoke;
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 12px;
-  font-weight: bold;
+
+body{
+  background-color: #f9fafb;
 }
