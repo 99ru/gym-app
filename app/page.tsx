@@ -1,10 +1,11 @@
 'use client'
-
+import { Workout } from './types'
 import { FC, useState } from 'react'
 import useSWR from 'swr'
 import AddWorkout from '../components/AddWorkout'
 import FilteredWorkouts from '../components/FilteredWorkouts'
-import { Workout } from './types' // Importing the Workout type from types.ts
+import WorkoutCard from '../components/WorkoutCard'
+
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 
@@ -14,14 +15,16 @@ const Home: FC = () => {
     fetcher
   )
   const [showWorkout, setShowWorkout] = useState(false)
+  const [selectedWorkouts, setSelectedWorkouts] = useState<Workout[]>([])
 
   if (error) return <div>Failed to load workouts</div>
   if (!data) return <div>Loading...</div>
 
   return (
-    <>
+   <>
       {!showWorkout && <AddWorkout showWorkout={showWorkout} setShowWorkout={setShowWorkout} />}
-      {showWorkout && <FilteredWorkouts workouts={data.workouts} />}
+      {showWorkout && <FilteredWorkouts workouts={data.workouts} setSelectedWorkouts={setSelectedWorkouts} />}
+      {selectedWorkouts.map(workout => <WorkoutCard workout={workout} key={workout.id} />)}
     </>
   )
 }
