@@ -3,7 +3,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { Workout } from "../utils/types";
 
-
 type Props = {
   workouts: Workout[]
   setSelectedWorkouts: React.Dispatch<React.SetStateAction<Workout[]>>
