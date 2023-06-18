@@ -7,11 +7,13 @@ import { Workout } from "../utils/types";
 type Props = {
   workouts: Workout[]
   setSelectedWorkouts: React.Dispatch<React.SetStateAction<Workout[]>>
+  setShowWorkout: (show: boolean) => void
 }
 
 const FilteredWorkouts: React.FC<Props> = ({
   workouts,
   setSelectedWorkouts,
+  setShowWorkout,
 }) => {
   const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -28,6 +30,7 @@ const FilteredWorkouts: React.FC<Props> = ({
   const handleWorkoutClick = (workout: Workout) => {
     setSelectedWorkouts((prevWorkouts) => [...prevWorkouts, workout]);
     setOpen(false);
+    setShowWorkout(false);
   };
 
   return (

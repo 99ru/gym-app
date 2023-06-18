@@ -20,12 +20,11 @@ const Home: FC = () => {
   if (!data) return <div>Loading...</div>
 
   return (
-   <>
-      {!showWorkout && <AddWorkout showWorkout={showWorkout} setShowWorkout={setShowWorkout} />}
-      {showWorkout && <FilteredWorkouts workouts={data.workouts} setSelectedWorkouts={setSelectedWorkouts} />}
-
+    <>
+      {!showWorkout && <AddWorkout showWorkout={showWorkout} setShowWorkout={setShowWorkout} selectedWorkouts={selectedWorkouts} />}
+      {showWorkout && <FilteredWorkouts workouts={data.workouts} setSelectedWorkouts={setSelectedWorkouts} setShowWorkout={setShowWorkout} />}
     </>
   )
 }
 
-export default Home
+export default Home;
