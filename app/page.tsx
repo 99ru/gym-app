@@ -1,10 +1,9 @@
 'use client'
-import { Workout } from './types'
+import { Workout } from '../utils/types'
 import { FC, useState } from 'react'
 import useSWR from 'swr'
 import AddWorkout from '../components/AddWorkout'
 import FilteredWorkouts from '../components/FilteredWorkouts'
-import WorkoutCard from '../components/WorkoutCard'
 
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
@@ -24,7 +23,7 @@ const Home: FC = () => {
    <>
       {!showWorkout && <AddWorkout showWorkout={showWorkout} setShowWorkout={setShowWorkout} />}
       {showWorkout && <FilteredWorkouts workouts={data.workouts} setSelectedWorkouts={setSelectedWorkouts} />}
-      {selectedWorkouts.map(workout => <WorkoutCard workout={workout} key={workout.id} />)}
+
     </>
   )
 }

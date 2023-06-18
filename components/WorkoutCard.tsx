@@ -1,5 +1,5 @@
 import React from 'react'
-import { Workout } from '../app/types' 
+import { Workout } from '../utils/types' 
 
 type Props = {
   workout: Workout
