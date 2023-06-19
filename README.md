@@ -1,4 +1,4 @@
-Gym Planner app in Next.js
+Gym Planner app in Next.js & Tailwind css
 TODO:
 1. add auth
 2. add calendar
