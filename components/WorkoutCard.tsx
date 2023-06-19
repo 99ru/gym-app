@@ -63,15 +63,17 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
               </div>
               <div className="flex items-center">
                 <button onClick={() => setExpanded(!isExpanded)}>
-                  <FiChevronDown size={24}/>
+                  <FiChevronDown size={24} />
                 </button>
-                <div className="ml-4 cursor-pointer">
+                <button
+                  className="ml-4 cursor-pointer"
+                  onClick={() => onDelete(workout.id)}
+                >
                   <BsTrash
                     size={16}
                     className="cursor-pointer hover:opacity-70 text-black"
-                    onClick={() => onDelete(workout.id)}
                   />
-                </div>
+                </button>
               </div>
             </div>
             {isExpanded && (
@@ -111,7 +113,7 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                       onClick={() => handleEditSet(index)}
                       className="p-2"
                     >
-                      <BsFillPencilFill size={16}/>
+                      <BsFillPencilFill size={16} />
                     </button>
                   </div>
                 ))}
@@ -132,8 +134,10 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                       );
                     }}
                   />
-                  
-                  <h2 className="text-center text-m sm:text-1xl mb-5">Add Set</h2>
+
+                  <h2 className="text-center text-m sm:text-1xl mb-5">
+                    Add Set
+                  </h2>
                 </div>
               </div>
             )}
