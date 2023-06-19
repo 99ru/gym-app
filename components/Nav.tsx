@@ -7,7 +7,7 @@ export function Nav() {
   return (
     <>
       <nav className="transition min-w-0 rounded-lg shadow-2xl overflow-hidden bg-white dark:bg-gray-800">
-        <div className="w-full h-[4rem] px-[3rem] till-phone:px-[5vw] relative till-desktop:h-[6rem] justify-between flex items-center">
+        <div className="w-full h-[4rem] px-[3rem] till-phone:px-[5vw] relative till-desktop:h-[6rem] justify-around flex items-center">
           <li className="flex items-center space-x-2">
             <IoBarbellOutline className="w-8 h-8 text-black" />
             <strong>
