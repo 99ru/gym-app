@@ -3,19 +3,17 @@ import { BiDumbbell, BiUser } from 'react-icons/bi';
 
 export function Nav() {
   return (
-    <nav className="fixed top-0 left-1/4 right-1/4 h-14 p-2">
-      <ul className="flex justify-between h-full">
-        <li className="flex items-center">
-          <BiDumbbell className="inline-flex items-center justify-center w-12 h-12 text-white" />
-          <h1 className="text-white inline-flex p-1">NEXT GYM</h1>
-        </li>
-        <li className="flex items-center">
-          {/* icons in middle */}
-        </li>
-        <li className="flex items-center">
-          <BiUser className="text-white h-8 w-8 rounded-full object-cover" />
-        </li>
-      </ul>
+    <nav className="transition min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+    
+      <div className="w-full h-[5rem] px-[3rem] till-phone:px-[5vw] relative till-desktop:h-[6rem] justify-between flex items-center">
+        <div className="flex items-center space-x-2">
+          <BiDumbbell className="w-8 h-8 text-black" />
+          <h1 className="text-black">NEXT GYM</h1>
+        </div>
+        <div className="flex items-center">
+          <BiUser className="text-black h-8 w-8 rounded-full" />
+        </div>
+      </div>
     </nav>
   );
 }

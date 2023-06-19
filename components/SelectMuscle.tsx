@@ -16,7 +16,7 @@ const SelectMuscle: React.FC<Props> = ({
 }) => {
   const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const muscles = ["Shoulders", "Biceps", "Legs", "Back", "Chest"];
+  const muscles = ["Shoulders", "Biceps", "Triceps", "Legs", "Back", "Chest"];
   const SelectMuscle = selectedMuscle
     ? workouts.filter((workout) => workout.muscle === selectedMuscle)
     : [];
