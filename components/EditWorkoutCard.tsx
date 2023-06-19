@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-type EditDialogProps = {
+type Props = {
   reps: number;
   weight: number;
   onSave: (reps: number, weight: number) => void;
   onClose: () => void;
 };
 
-const EditDialog: React.FC<EditDialogProps> = ({ reps, weight, onSave, onClose }) => {
+const EditWorkoutCard: React.FC<Props> = ({ reps, weight, onSave, onClose }) => {
   const [newReps, setNewReps] = useState(reps);
   const [newWeight, setNewWeight] = useState(weight);
 
@@ -71,4 +71,4 @@ const EditDialog: React.FC<EditDialogProps> = ({ reps, weight, onSave, onClose }
   );
 };
 
-export default EditDialog;
+export default EditWorkoutCard;
