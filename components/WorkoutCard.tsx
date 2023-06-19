@@ -63,12 +63,12 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
               </div>
               <div className="flex items-center">
                 <button onClick={() => setExpanded(!isExpanded)}>
-                  <FiChevronDown size={16} />
+                  <FiChevronDown size={24}/>
                 </button>
                 <div className="ml-4 cursor-pointer">
                   <BsTrash
                     size={16}
-                    className="cursor-pointer hover:opacity-70"
+                    className="cursor-pointer hover:opacity-70 text-black"
                     onClick={() => onDelete(workout.id)}
                   />
                 </div>
@@ -79,39 +79,45 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 {workoutSets.map((set, index) => (
                   <div
                     key={index}
-                    className="bg-e5edff p-2 rounded-lg my-2 flex items-center justify-between space-x-2 bg-slate-50"
+                    className="border-b text-black p-2 rounded-lg my-2 flex items-center justify-between space-x-2 "
                   >
                     <div className="flex flex-col items-center">
                       <label className="text-sm md:text-base">Set</label>
-                      <p className="text-base md:text-lg max-w-full whitespace-nowrap">
-                        {index + 1}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col items-center">
-                      <label className="text-sm md:text-base">Weight</label>
-                      <p className="text-base md:text-lg max-w-full whitespace-nowrap">
-                        {set.weight}kg
-                      </p>
+                      <strong>
+                        <p className="text-base md:text-lg max-w-full whitespace-nowrap">
+                          {index + 1}
+                        </p>
+                      </strong>
                     </div>
 
                     <div className="flex flex-col items-center">
                       <label className="text-sm md:text-base">Reps</label>
-                      <p className="text-base md:text-lg max-w-full whitespace-nowrap">
-                        {set.reps}
-                      </p>
+                      <strong>
+                        <p className="text-base md:text-lg max-w-full whitespace-nowrap">
+                          {set.reps}
+                        </p>
+                      </strong>
+                    </div>
+
+                    <div className="flex flex-col items-center">
+                      <label className="text-sm md:text-base">Weight</label>
+                      <strong>
+                        <p className="text-base md:text-lg max-w-full whitespace-nowrap">
+                          {set.weight}kg
+                        </p>
+                      </strong>
                     </div>
                     <button
                       onClick={() => handleEditSet(index)}
                       className="p-2"
                     >
-                      <BsFillPencilFill size={16} />
+                      <BsFillPencilFill size={16}/>
                     </button>
                   </div>
                 ))}
                 <div className="flex flex-col items-center">
                   <IoAddCircle
-                    className="cursor-pointer hover:opacity-70"
+                    className="cursor-pointer hover:opacity-70 text-dodgerblue mt-4"
                     size={32}
                     onClick={() => {
                       const newWorkoutSets = [
@@ -126,7 +132,8 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                       );
                     }}
                   />
-                  <h1 className="text-base md:text-lg text-center">Add Set</h1>
+                  
+                  <h2 className="text-center text-m sm:text-1xl mb-5">Add Set</h2>
                 </div>
               </div>
             )}
