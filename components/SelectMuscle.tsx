@@ -79,9 +79,10 @@ const SelectMuscle: React.FC<Props> = ({
                       <Image
                         src={workout.image}
                         alt={workout.name}
-                        width={50}
-                        height={50}
+                        width={30}
+                        height={30}
                         className="rounded-full"
+                        priority
                       />
                     </div>
                     <div>

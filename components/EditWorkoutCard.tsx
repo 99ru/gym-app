@@ -27,7 +27,7 @@ const EditWorkoutCard: React.FC<Props> = ({ reps, weight, onSave, onClose }) => 
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
         <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
           <h3 className="text-2xl font-semibold text-black mb-4">Edit Set</h3>
-          <div className="flex dark:bg-black p-2 rounded-lg flex-row justify-between text-gray-600 dark:text-gray-300">
+          <div className="flex p-2 rounded-lg flex-row text-gray-600 dark:text-gray-300">
             <div>
               <div className="text-center pb-2 text-base font-semibold">
                 <label>Weight</label>

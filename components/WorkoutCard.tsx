@@ -57,6 +57,7 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                     alt={workout.name}
                     width={100}
                     height={100}
+                    priority
                   />
                 </div>
                 <p className="font-bold text-lg">{workout.name}</p>
