@@ -63,12 +63,16 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 <p className="font-bold text-lg">{workout.name}</p>
               </div>
               <div className="flex items-center">
-                <button onClick={() => setExpanded(!isExpanded)}>
+                <button
+                  onClick={() => setExpanded(!isExpanded)}
+                  aria-label="Toggle Expand"
+                >
                   <FiChevronDown size={24} />
                 </button>
                 <button
                   className="ml-4 cursor-pointer"
                   onClick={() => onDelete(workout.id)}
+                  aria-label="Delete Workout"
                 >
                   <BsTrash
                     size={16}
@@ -113,6 +117,7 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                     <button
                       onClick={() => handleEditSet(index)}
                       className="p-2"
+                      aria-label="Edit Set"
                     >
                       <BsFillPencilFill size={16} />
                     </button>
