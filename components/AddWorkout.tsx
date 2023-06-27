@@ -27,7 +27,7 @@ const AddWorkout: React.FC<Props> = ({ showWorkout, setShowWorkout, selectedWork
             <WorkoutCard key={workout.id} workout={workout} onDelete={onDelete} />
           ))
         ) : (
-          <p className="text-gray-500">Click on the "Add Workout" above to get started.</p>
+          <p className="text-gray-500">Click on the 'Add Workout' above to get started.</p>
         )}
       </div>
     </div>
