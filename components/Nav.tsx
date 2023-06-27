@@ -6,6 +6,7 @@ import { SignInButton, UserButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut } from "@clerk/nextjs/app-beta/client";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { CiDumbbell } from "react-icons/ci";
+import CurrentTime from "./CurrentTime";
 
 export function Nav() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -78,7 +79,9 @@ export function Nav() {
       <div className="w-full px-[3rem] till-phone:px-[5vw] h-[2rem] till-desktop:h-[4rem] flex items-center justify-center bg-white bg-white text-black">
         {/* Add your current time component here */}
       </div>
+      <CurrentTime />
     </nav>
+    
   );
 }
 
