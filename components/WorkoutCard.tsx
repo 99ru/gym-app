@@ -46,7 +46,7 @@ const WorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
 
   return (
     <div>
-      <Card className="p-4 m-2 w-full sm:w-64 md:w-72 lg:w-160 shadow-md">
+      <Card className="p-4 m-2 w-full sm:w-64 md:w-128 lg:w-160 shadow-md">
         <div>
           <CardBody className="flex flex-col items-start justify-between">
             <div className="flex items-center w-full justify-between">

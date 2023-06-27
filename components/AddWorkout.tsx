@@ -4,12 +4,11 @@ import { IoAddCircle } from "react-icons/io5";
 import WorkoutCard from "../components/WorkoutCard";
 import { Workout } from "../utils/types";
 
-
 type Props = {
   showWorkout: boolean;
   setShowWorkout: (show: boolean) => void;
   selectedWorkouts: Workout[];
-    onDelete: (id: number) => void;
+  onDelete: (id: number) => void;
 };
 
 const AddWorkout: React.FC<Props> = ({ showWorkout, setShowWorkout, selectedWorkouts, onDelete }) => {
@@ -17,7 +16,6 @@ const AddWorkout: React.FC<Props> = ({ showWorkout, setShowWorkout, selectedWork
     setShowWorkout(true);
   }, [setShowWorkout]);
 
-  
   return (
     <div className="p-5 sm:p-10 flex flex-col items-center justify-center">
       <div className="flex items-center justify-center">
@@ -29,9 +27,13 @@ const AddWorkout: React.FC<Props> = ({ showWorkout, setShowWorkout, selectedWork
       <h2 className="text-center text-m sm:text-1xl mb-5">Add Workout</h2>
 
       <div className="flex flex-col items-center w-full">
-        {selectedWorkouts.map((workout) => (
-         <WorkoutCard key={workout.id} workout={workout} onDelete={onDelete} />
-        ))}
+        {selectedWorkouts.length > 0 ? (
+          selectedWorkouts.map((workout) => (
+            <WorkoutCard key={workout.id} workout={workout} onDelete={onDelete} />
+          ))
+        ) : (
+          <p className="text-gray-500">Click on the "Add Workout" above to get started.</p>
+        )}
       </div>
     </div>
   );
