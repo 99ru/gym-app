@@ -76,10 +76,9 @@ export function Nav() {
           </div>
         </div>
       )}
-      <div className="w-full px-[3rem] till-phone:px-[5vw] h-[2rem] till-desktop:h-[4rem] flex items-center justify-center bg-white bg-white text-black">
-        {/* Add your current time component here */}
-      </div>
+      <div className="w-full px-[3rem] till-phone:px-[5vw] h-[2rem] till-desktop:h-[4rem] flex items-center justify-center bg-dodgerblue bg-white text-white">
       <CurrentTime />
+      </div>
     </nav>
     
   );
