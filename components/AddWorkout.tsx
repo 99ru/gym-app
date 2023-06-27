@@ -1,5 +1,4 @@
 import React from "react";
-import { useCallback } from 'react';
 import { IoAddCircle } from "react-icons/io5";
 import WorkoutCard from "../components/WorkoutCard";
 import { Workout } from "../utils/types";
@@ -12,10 +11,6 @@ type Props = {
 };
 
 const AddWorkout: React.FC<Props> = ({ showWorkout, setShowWorkout, selectedWorkouts, onDelete }) => {
-  const handleShowWorkout = useCallback(() => {
-    setShowWorkout(true);
-  }, [setShowWorkout]);
-
   return (
     <div className="p-5 sm:p-10 flex flex-col items-center justify-center">
       <div className="flex items-center justify-center">

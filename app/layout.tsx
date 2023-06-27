@@ -1,6 +1,10 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { Nav } from '../components/Nav'
+import { Nav } from '../components/layout/Nav'
+
+
+import { ClerkProvider } from '@clerk/nextjs'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,11 +19,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+  <ClerkProvider>
     <html lang="en">
       <body className={inter.className}>
        <Nav />
       {children}
       </body>
     </html>
+    </ClerkProvider>
   )
 }

@@ -4,7 +4,7 @@ import { Workout } from "./types";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function useWorkouts() {
+export default function dataWorkouts() {
   const { data, error } = useSWR<{ workouts: Workout[] }>(
     "https://run.mocky.io/v3/0a8a7068-2165-4c9a-96aa-6992b4148a52",
     fetcher

@@ -76,6 +76,9 @@ module.exports = {
         '112': '28rem',
         '128': '40rem',
       },
+      colors: {
+      "dodgerblue": "#1E90FF",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
