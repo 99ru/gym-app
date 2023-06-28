@@ -15,11 +15,9 @@ const Page: React.FC<PageProps> = ({ searchParams }) => {
       <div className='container'>
         <div className='flex justify-center'>
           <SignedOut>
-          <h1>Hoj</h1>
             <SignIn redirectUrl={redirectUrl || '/'} />
           </SignedOut>
           <SignedIn>
-            <h1>You are already signed in!</h1>
             <UserButton />
           </SignedIn>
         </div>

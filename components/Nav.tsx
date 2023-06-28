@@ -50,7 +50,7 @@ export function Nav() {
                 <SignedIn>
                   <>
                   <Link href="/">
-                    <UserButton />
+                     <UserButton afterSignOutUrl="/" />
                    </Link>
                   </>
                 </SignedIn>
