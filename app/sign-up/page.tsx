@@ -1,6 +1,6 @@
 import { SignUp } from '@clerk/nextjs/app-beta'
 
-const Page = async () => {
+const Page = () => {
   return (
     <section className='py-24'>
       <div className='container'>
