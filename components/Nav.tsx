@@ -76,7 +76,7 @@ export function Nav() {
           </div>
         </div>
       )}
-      <div className="w-full px-[3rem] till-phone:px-[5vw] h-[2rem] till-desktop:h-[4rem] flex items-center justify-center bg-dodgerblue bg-white text-white">
+      <div className="w-full px-[3rem] till-phone:px-[5vw] h-[2rem] till-desktop:h-[4rem] flex items-center justify-center bg-white text-black">
       <CurrentTime />
       </div>
     </nav>
