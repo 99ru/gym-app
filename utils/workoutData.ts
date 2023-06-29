@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
-import useSWR from "swr";
 import { Workout } from "./types";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import workoutData from './workoutData.json';
 
 export default function dataWorkouts() {
-  const { data, error } = useSWR<{ workouts: Workout[] }>(
-    "https://run.mocky.io/v3/0a8a7068-2165-4c9a-96aa-6992b4148a52",
-    fetcher
-  );
   const [selectedWorkouts, setSelectedWorkouts] = useState<Workout[]>([]);
 
   const onDelete = (id: number) => {
@@ -29,8 +23,7 @@ export default function dataWorkouts() {
   }, [selectedWorkouts]);
 
   return {
-    data,
-    error,
+    data: workoutData,
     selectedWorkouts,
     setSelectedWorkouts,
     onDelete,
