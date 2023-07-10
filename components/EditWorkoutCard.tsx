@@ -52,7 +52,7 @@ const EditWorkoutCard: React.FC<Props> = ({ reps, weight, onSave, onClose }) => 
                   onChange={(e) => setNewReps(parseInt(e.target.value))}
                   className="py-2 rounded w-full sm:w-1/2 border text-black text-center"
                 />
-              </div>
+              </div>        
             </div>
           </div>
           <div className="mt-4">

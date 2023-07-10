@@ -2,10 +2,6 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { Nav } from '../components/Nav'
 
-
-import { ClerkProvider } from '@clerk/nextjs'
-const clerk_pub_key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY; 
-
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -19,13 +15,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-  <ClerkProvider publishableKey={clerk_pub_key} >
     <html lang="en">
       <body className={inter.className}>
-       <Nav />
-      {children}
+        <Nav />
+        {children}
       </body>
     </html>
-    </ClerkProvider>
   )
 }

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import workoutData from "../utils/workoutData";
 import AddWorkout from "../components/AddWorkout";
 import SelectMuscle from "../components/SelectMuscle";
-import { useUser } from '@clerk/nextjs'
 
 const Home: React.FC = () => {
 
