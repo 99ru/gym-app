@@ -1,33 +1,55 @@
 'use client'
-import React, { useState } from "react";
-import workoutData from "../utils/workoutData";
+import React, { useContext, useState } from "react";
+import Nav from "@/components/Nav";
 import AddWorkout from "../components/AddWorkout";
 import SelectMuscle from "../components/SelectMuscle";
+import LoginPage from "../app/login/page";
+import workoutsData from "../utils/workouts.json";
+import WorkoutCards  from "../components/WorkoutCards";
+
+import { AuthContext, AuthProvider } from "../auth/AuthProvider";
+
 
 const Home: React.FC = () => {
-
-  const { data, selectedWorkouts, setSelectedWorkouts, onDelete } = workoutData();
+  const { currentUser, loading } = useContext(AuthContext);
+  const workouts = workoutsData.workouts; 
   const [showWorkout, setShowWorkout] = useState(false);
+
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+
+  if (!currentUser) {
+    return <LoginPage />;
+  }
 
   return (
     <>
+      <Nav />
+      
       {!showWorkout && (
         <AddWorkout
-          showWorkout={showWorkout}
           setShowWorkout={setShowWorkout}
-          selectedWorkouts={selectedWorkouts}
-          onDelete={onDelete}
         />
       )}
       {showWorkout && (
         <SelectMuscle
-          workouts={data.workouts}
-          setSelectedWorkouts={setSelectedWorkouts}
+          workouts={workouts}
           setShowWorkout={setShowWorkout}
         />
       )}
+
+     <WorkoutCards  />
     </>
   );
 };
 
-export default Home;
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <Home />
+    </AuthProvider>
+  );
+};
+
+export default App;

@@ -35,7 +35,7 @@ const CurrentTime: React.FC = () => {
     return `${dayOfWeek}, ${month}, ${dayOfMonth}${suffix}, ${year}`;
   }
 
-  return <h2>{formatDate(currentTime)}</h2>;
+  return <h2>{formatDate(currentTime)} 📅</h2>;
 }
 
 export default CurrentTime;
