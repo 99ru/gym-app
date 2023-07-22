@@ -53,7 +53,7 @@ const LoginPage = () => {
               <div className="text-gray-700 dark:text-gray-200">
              
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-center mb-3 md:mb-4 tracking-tighter leading-2">
-                  Next Workout
+                  GetFit
                 </h1>
                 <h2 className="text-lg text-center font-medium mb-8 leading-3">
                   Start your fitness journey today!
