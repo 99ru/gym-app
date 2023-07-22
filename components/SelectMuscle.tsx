@@ -1,18 +1,20 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { Workout } from "../utils/types";
-/* import { XIcon } from "@heroicons/react/outline"; */
 import { IoCloseSharp } from "react-icons/io5";
-
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../utils/firebase";
+import { useAuth } from "../auth/AuthProvider";
+import useWorkoutsData from "../utils/workoutData";
 
 type Props = {
   workouts: Workout[];
-  setSelectedWorkouts: React.Dispatch<React.SetStateAction<Workout[]>>;
   setShowWorkout: (show: boolean) => void;
 };
 
-const SelectMuscle: React.FC<Props> = ({ workouts, setSelectedWorkouts, setShowWorkout }) => {
+const SelectMuscle: React.FC<Props> = ({ workouts, setShowWorkout }) => {
+  const { currentUser } = useAuth();
   const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const muscles = [
@@ -25,27 +27,40 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setSelectedWorkouts, setShowW
     "Abs",
     "Full Body",
   ];
-  const handleButtonClick = useCallback((muscle: string) => {
+
+  const { selectedWorkouts } = useWorkoutsData();
+
+  const handleButtonClick = (muscle: string) => {
     setSelectedMuscle(muscle);
     setOpen(true);
-  }, []);
+  };
 
-  const handleWorkoutClick = useCallback((workout: Workout) => {
-    setSelectedWorkouts((prevWorkouts) => [...prevWorkouts, workout]);
-    setOpen(false);
-    setShowWorkout(false);
-  }, [setSelectedWorkouts, setShowWorkout]);
+  const handleWorkoutClick = async (workout: Workout) => {
+    if (currentUser !== null) {
+      if (
+        !selectedWorkouts.some(
+          (selectedWorkout) => selectedWorkout.id === workout.id
+        )
+      ) {
+        await addDoc(
+          collection(db, `users/${currentUser.uid}/workouts`),
+          workout
+        );
+        setOpen(false);
+        setShowWorkout(false);
+      } else {
+        console.log("This workout has already been added");
+      }
+    } else {
+      console.log("No authenticated user");
+    }
+  };
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setSelectedMuscle(null);
     setOpen(false);
     setShowWorkout(false);
-  }, [setShowWorkout]);
-
-  const SelectMuscle = useMemo(() => 
-    selectedMuscle ? workouts.filter((workout) => workout.muscle === selectedMuscle) : [], 
-    [selectedMuscle, workouts]
-  );
+  };
 
   return (
     <section className="flex flex-wrap justify-center mt-20">
@@ -92,29 +107,31 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setSelectedWorkouts, setShowW
               </Dialog.Title>
 
               <div className="mt-2 space-y-4">
-                {SelectMuscle.map((workout) => (
-                  <div
-                    key={workout.id}
-                    className="flex items-center space-x-4 cursor-pointer"
-                    onClick={() => handleWorkoutClick(workout)}
-                  >
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={workout.image}
-                        alt={workout.name}
-                        width={30}
-                        height={30}
-                        className="rounded-full"
-                        priority
-                      />
+                {workouts
+                  .filter((workout) => workout.muscle === selectedMuscle)
+                  .map((workout) => (
+                    <div
+                      key={workout.id}
+                      className="flex items-center space-x-4 cursor-pointer"
+                      onClick={() => handleWorkoutClick(workout)}
+                    >
+                      <div className="flex-shrink-0">
+                        <Image
+                          src={workout.image}
+                          alt={workout.name}
+                          width={30}
+                          height={30}
+                          className="rounded-full"
+                          priority
+                        />
+                      </div>
+                      <div>
+                        <p className="text-lg font-medium text-gray-900">
+                          {workout.name}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-lg font-medium text-gray-900">
-                        {workout.name}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           </div>
