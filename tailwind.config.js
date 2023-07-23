@@ -27,7 +27,6 @@ module.exports = {
       "dodgerblue": "#1E90FF",
       "dark": "#191414",
       "green": "#1DB954",
-
       },
     },
   },

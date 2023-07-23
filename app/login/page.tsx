@@ -73,7 +73,7 @@ const LoginPage = () => {
                 className="object-cover w-full h-full dark:hidden"
                 src="/loginimg.jpg"
                 alt="image"
-                height={800}
+                height={400}
                 width={426}
                 priority
               />

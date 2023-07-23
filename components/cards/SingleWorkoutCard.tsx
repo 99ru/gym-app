@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Workout as WorkoutType,
   WorkoutSet as WorkoutSetType,
-} from "../utils/types";
+} from "../../utils/types";
 import Image from "next/image";
 import { Card, CardBody } from "@windmill/react-ui";
 import { FiChevronDown } from "react-icons/fi";
@@ -100,8 +100,8 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 <Image
                   src={workout.image}
                   alt={workout.name}
-                  width={100}
-                  height={100}
+                  width={70}
+                  height={70}
                   priority
                 />
               </div>
@@ -214,6 +214,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
           />
         )}
     </div>
+    
   );
 };
 
