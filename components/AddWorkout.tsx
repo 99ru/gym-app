@@ -17,7 +17,7 @@ const AddWorkout: React.FC<Props> = ({ setShowWorkout }) => {
       </div>
       <h2 className="text-center text-m sm:text-1xl mb-5">Add Workout</h2>
 
-      <div className="w-full px-[3rem] till-phone:px-[5vw] h-[2rem] till-desktop:h-[4rem] flex items-center justify-center bg-white text-dark">
+      <div className="w-full px-[3rem] till-phone:px-[5vw] h-[2rem] till-desktop:h-[4rem] flex items-center justify-center">
         <CurrentTime />
       </div>
     </div>
