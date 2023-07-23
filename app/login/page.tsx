@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import { AuthContext } from "@/auth/AuthProvider";
-import { auth, signInAsGuest, signInWithGoogle } from "@/utils/firebase";
+import { signInAsGuest, signInWithGoogle } from "@/utils/firebase";
 
 const LoginPage = () => {
   const { setCurrentUser } = useContext(AuthContext);
@@ -25,7 +25,20 @@ const LoginPage = () => {
     }
   };
 
-  const buttonStyles = {
+ const googleStyles = {
+    backgroundColor: "white",
+    color: "black",
+    height: "50px",
+    padding: "0 20px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "4px",
+    marginBottom: "10px",
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+  };
+
+  const guestStyles = {
     backgroundColor: "black",
     color: "white",
     height: "50px",
@@ -33,10 +46,10 @@ const LoginPage = () => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: "5px",
+    borderRadius: "4px",
     marginBottom: "10px",
   };
-
+ 
   const googleIconStyles = {
     height: "20px",
     width: "20px",
@@ -50,7 +63,7 @@ const LoginPage = () => {
   };
 
   return (
-    <main>
+    <>
       <div className="flex items-center min-h-screen p-6 bg-white dark:bg-gray-900">
         <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-gray-100 rounded-lg shadow-xl dark:bg-black">
           <div className="flex flex-col overflow-y-auto md:flex-row w-full md:w-auto">
@@ -58,7 +71,7 @@ const LoginPage = () => {
               <Image
                 aria-hidden="true"
                 className="object-cover w-full h-full dark:hidden"
-                src="/login.jpg"
+                src="/loginimg.jpg"
                 alt="image"
                 height={800}
                 width={426}
@@ -82,7 +95,7 @@ const LoginPage = () => {
                     flexDirection: "column",
                   }}
                 >
-                  <button onClick={handleGoogleLogin} style={buttonStyles}>
+                  <button onClick={handleGoogleLogin} style={googleStyles}>
                     <img
                       style={googleIconStyles}
                       alt=""
@@ -90,7 +103,7 @@ const LoginPage = () => {
                     />
                     <span>Sign in with Google</span>
                   </button>
-                  <button onClick={handleLogin} style={buttonStyles}>
+                  <button onClick={handleLogin} style={guestStyles}>
                     <img
                       style={anonymousIconStyles}
                       alt=""
@@ -104,7 +117,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 };
 
