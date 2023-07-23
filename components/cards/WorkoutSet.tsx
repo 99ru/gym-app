@@ -1,6 +1,6 @@
 import React from 'react';
 import { BsFillPencilFill } from 'react-icons/bs';
-import { WorkoutSet as WorkoutSetType } from '../utils/types';
+import { WorkoutSet as WorkoutSetType } from '../../utils/types';
 
 type Props = {
   set: WorkoutSetType;

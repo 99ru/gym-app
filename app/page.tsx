@@ -5,20 +5,18 @@ import AddWorkout from "../components/AddWorkout";
 import SelectMuscle from "../components/SelectMuscle";
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
-import WorkoutCards  from "../components/WorkoutCards";
-
+import WorkoutCards  from "../components/cards/WorkoutCards";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
-
 
 const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
   const workouts = workoutsData.workouts; 
-  const [showWorkout, setShowWorkout] = useState(false);
+  const [isAddingWorkout, setIsAddingWorkout] = useState(false);
 
   if (loading) {
     return <div>Loading...</div>; 
   }
-
+  
   if (!currentUser) {
     return <LoginPage />;
   }
@@ -26,19 +24,17 @@ const Home: React.FC = () => {
   return (
     <>
       <Nav />
-      
-      {!showWorkout && (
+      {!isAddingWorkout && (
         <AddWorkout
-          setShowWorkout={setShowWorkout}
+          setIsAddingWorkout={setIsAddingWorkout}
         />
       )}
-      {showWorkout && (
+      {isAddingWorkout && (
         <SelectMuscle
           workouts={workouts}
-          setShowWorkout={setShowWorkout}
+          setIsAddingWorkout={setIsAddingWorkout}
         />
       )}
-
      <WorkoutCards  />
     </>
   );
