@@ -96,18 +96,22 @@ const LoginPage = () => {
                   }}
                 >
                   <button onClick={handleGoogleLogin} style={googleStyles}>
-                    <img
+                    <Image
                       style={googleIconStyles}
                       alt=""
                       src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                      width={40}
+                      height={40}
                     />
                     <span>Sign in with Google</span>
                   </button>
                   <button onClick={handleLogin} style={guestStyles}>
-                    <img
+                    <Image
                       style={anonymousIconStyles}
                       alt=""
                       src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/anonymous.png"
+                      width={40}
+                      height={40}
                     />
                     <span>Continue as Guest</span>
                   </button>
