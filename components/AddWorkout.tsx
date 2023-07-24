@@ -14,7 +14,7 @@ const AddWorkout: React.FC<Props> = ({ setIsAddingWorkout  }) => {
           onClick={() => setIsAddingWorkout (true)}
         />
       </div>
-      <h2 className="text-center text-m sm:text-1xl mb-5">Add Workout</h2>
+      <h2 className="text-center text-m sm:text-1xl mb-5 font-bold">Add Workout</h2>
     </div>
   );
 };

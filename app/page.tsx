@@ -1,22 +1,23 @@
-'use client'
+"use client";
 import React, { useContext, useState } from "react";
 import Nav from "@/components/Nav";
+import Footer from "@/components/footer";
 import AddWorkout from "../components/AddWorkout";
 import SelectMuscle from "../components/SelectMuscle";
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
-import WorkoutCards  from "../components/cards/WorkoutCards";
+import WorkoutCards from "../components/cards/WorkoutCards";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
 
 const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
-  const workouts = workoutsData.workouts; 
+  const workouts = workoutsData.workouts;
   const [isAddingWorkout, setIsAddingWorkout] = useState(false);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
-  
+
   if (!currentUser) {
     return <LoginPage />;
   }
@@ -25,9 +26,7 @@ const Home: React.FC = () => {
     <>
       <Nav />
       {!isAddingWorkout && (
-        <AddWorkout
-          setIsAddingWorkout={setIsAddingWorkout}
-        />
+        <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
       )}
       {isAddingWorkout && (
         <SelectMuscle
@@ -35,7 +34,10 @@ const Home: React.FC = () => {
           setIsAddingWorkout={setIsAddingWorkout}
         />
       )}
-     <WorkoutCards  />
+      <div className="flex-grow">
+        <WorkoutCards />
+      </div>
+      <Footer />
     </>
   );
 };

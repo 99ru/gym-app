@@ -105,7 +105,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   priority
                 />
               </div>
-              <p className="font-bold text-lg">{workout.name}</p>
+              <p className="font-bold text-lg mr-1 truncate w-32 sm:w-auto">{workout.name}</p>
             </div>
             <div className="flex items-center">
               <button

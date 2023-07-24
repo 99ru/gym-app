@@ -43,18 +43,14 @@ const WorkoutCards: React.FC = () => {
   };
 
   return (
-      <div className="flex flex-col items-center">
-      {savedWorkouts.length === 0 ? (
-        <p>No workouts yet, click on the button above to get started</p>
-      ) : (
-        savedWorkouts.map((workout) => (
-          <SingleWorkoutCard
-            key={workout.id}
-            workout={workout}
-            onDelete={handleDeleteWorkout}
-          />
-        ))
-      )}
+    <div className="flex flex-col items-center">
+      {savedWorkouts.map((workout) => (
+        <SingleWorkoutCard
+          key={workout.id}
+          workout={workout}
+          onDelete={handleDeleteWorkout}
+        />
+      ))}
     </div>
   );
 };
