@@ -71,7 +71,7 @@ const LoginPage = () => {
               <Image
                 aria-hidden="true"
                 className="object-cover w-full h-full dark:hidden"
-                src="/loginimg.jpg"
+                src="/login2.webp"
                 alt="image"
                 height={400}
                 width={426}
