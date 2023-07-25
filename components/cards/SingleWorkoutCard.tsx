@@ -5,15 +5,13 @@ import {
 } from "../../utils/types";
 import Image from "next/image";
 import { Card, CardBody } from "@windmill/react-ui";
-import { FiChevronDown } from "react-icons/fi";
+import { Menu, Transition } from "@headlessui/react";
+
+import { FiChevronDown, FiMoreVertical } from "react-icons/fi";
 import { BsFillPencilFill, BsTrash } from "react-icons/bs";
 import { IoAddCircle } from "react-icons/io5";
 import EditWorkoutCard from "./EditWorkoutCard";
-import {
-  doc,
-  onSnapshot,
-  setDoc,
-} from "firebase/firestore";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
 type Props = {
@@ -26,6 +24,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
   const [isEditing, setEditing] = useState(false);
   const [editingSetIndex, setEditingSetIndex] = useState<number | null>(null);
   const [workoutSets, setWorkoutSets] = useState<WorkoutSetType[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const workoutSetsRef = doc(db, "workoutSets", workout.id.toString());
@@ -42,7 +41,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
     };
   }, [workout.id]);
 
-  const handleEditWorkoutSet  = (index: number) => {
+  const handleEditWorkoutSet = (index: number) => {
     setEditingSetIndex(index);
     setEditing(true);
   };
@@ -105,8 +104,11 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   priority
                 />
               </div>
-              <p className="font-bold text-lg mr-1 truncate w-32 sm:w-auto">{workout.name}</p>
+              <p className="font-bold text-lg mr-1 truncate w-32 sm:w-auto">
+                {workout.name}
+              </p>
             </div>
+
             <div className="flex items-center">
               <button
                 onClick={() => setExpanded(!isExpanded)}
@@ -114,16 +116,25 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
               >
                 <FiChevronDown size={24} />
               </button>
-              <button
-                className="ml-4 cursor-pointer"
-                onClick={() => onDelete(workout.docId)}
-                aria-label="Delete Workout"
-              >
-                <BsTrash
-                  size={16}
-                  className="cursor-pointer hover:opacity-70 text-black"
-                />
-              </button>
+              <Menu as="div" className="relative ml-3">
+                <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
+                  <FiMoreVertical size={20} />
+                </Menu.Button>
+                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? "bg-gray-100" : ""
+                        } block px-4 py-2 text-sm text-gray-700 text-center`}
+                        onClick={() => onDelete(workout.docId)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </Menu.Item>
+                </Menu.Items>
+              </Menu>
             </div>
           </div>
           {isExpanded && (
@@ -141,7 +152,6 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                       </p>
                     </strong>
                   </div>
-
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Reps</label>
                     <strong>
@@ -150,7 +160,6 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                       </p>
                     </strong>
                   </div>
-
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Weight</label>
                     <strong>
@@ -160,7 +169,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                     </strong>
                   </div>
                   <button
-                    onClick={() => handleEditWorkoutSet (index)}
+                    onClick={() => handleEditWorkoutSet(index)}
                     className="p-2"
                     aria-label="Edit Set"
                   >
@@ -178,7 +187,6 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                       { reps: 0, weight: 0 },
                     ];
                     setWorkoutSets(newWorkoutSets);
-
                     const workoutSetsRef = doc(
                       db,
                       "workoutSets",
@@ -214,7 +222,6 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
           />
         )}
     </div>
-    
   );
 };
 
