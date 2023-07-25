@@ -5,10 +5,9 @@ import {
 } from "../../utils/types";
 import Image from "next/image";
 import { Card, CardBody } from "@windmill/react-ui";
-import { Menu, Transition } from "@headlessui/react";
-
+import { Menu } from "@headlessui/react";
 import { FiChevronDown, FiMoreVertical } from "react-icons/fi";
-import { BsFillPencilFill, BsTrash } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 import { IoAddCircle } from "react-icons/io5";
 import EditWorkoutCard from "./EditWorkoutCard";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
@@ -24,7 +23,6 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
   const [isEditing, setEditing] = useState(false);
   const [editingSetIndex, setEditingSetIndex] = useState<number | null>(null);
   const [workoutSets, setWorkoutSets] = useState<WorkoutSetType[]>([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const workoutSetsRef = doc(db, "workoutSets", workout.id.toString());
@@ -104,9 +102,14 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   priority
                 />
               </div>
-              <p className="font-bold text-lg mr-1 truncate w-32 sm:w-auto">
-                {workout.name}
-              </p>
+              <div>
+                <p className="font-bold mr-1 truncate w-32 sm:w-auto">
+                  {workout.name}
+                </p>
+                <p className="text-sm text-gray-500">
+                  Total sets: {workoutSets.length}
+                </p>
+              </div>
             </div>
 
             <div className="flex items-center">
