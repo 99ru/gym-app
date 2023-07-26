@@ -6,18 +6,13 @@ import {
 import Image from "next/image";
 import { Card, CardBody } from "@windmill/react-ui";
 import { Menu } from "@headlessui/react";
-import { FiChevronDown, FiMoreVertical } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiMoreVertical } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IoAddCircle } from "react-icons/io5";
 import EditWorkoutCard from "./EditWorkoutCard";
 import { db } from "@/utils/firebase";
 import { useAuth } from "@/auth/AuthProvider";
-import {
-  updateDoc,
-  doc,
-  onSnapshot,
-  setDoc,
-} from "firebase/firestore";
+import { updateDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
 
 type Props = {
   workout: WorkoutType;
@@ -124,7 +119,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
       >
         <CardBody className="flex flex-col items-start justify-between">
           <div className="flex items-center w-full justify-between">
-            <div className="flex items-center">
+            <div className="flex items-center justify-start">
               <div className="mr-4">
                 <Image
                   src={workout.image}
@@ -138,19 +133,25 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 <p className="font-bold mr-1 truncate w-32 sm:w-auto">
                   {workout.name}
                 </p>
-                <p className="text-sm text-gray-500">
-                  Total sets: {workoutSets.length}
-                </p>
+                <div className="flex items-center" >
+                  <p className="text-sm font-bold text-gray-700 mr-2">
+                    Total sets: {workoutSets.length}
+                  </p>
+                  <button
+                    onClick={() => setExpanded(!isExpanded)}
+                    aria-label="Toggle Expand"
+                  >
+                    {isExpanded ? (
+                      <FiChevronUp size={24} />
+                    ) : (
+                      <FiChevronDown size={24} />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
 
             <div className="flex items-center">
-              <button
-                onClick={() => setExpanded(!isExpanded)}
-                aria-label="Toggle Expand"
-              >
-                <FiChevronDown size={24} />
-              </button>
               <Menu as="div" className="relative ml-3">
                 <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
                   <FiMoreVertical size={20} />
@@ -182,7 +183,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Set</label>
                     <strong>
-                      <p className="text-base md:text-lg max-w-full whitespace-nowrap">
+                      <p className="text-base  max-w-full whitespace-nowrap">
                         {index + 1}
                       </p>
                     </strong>
@@ -190,7 +191,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Reps</label>
                     <strong>
-                      <p className="text-base md:text-lg max-w-full whitespace-nowrap">
+                      <p className="text-base  max-w-full whitespace-nowrap">
                         {set.reps}
                       </p>
                     </strong>
@@ -198,7 +199,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Weight</label>
                     <strong>
-                      <p className="text-base md:text-lg max-w-full whitespace-nowrap">
+                      <p className="text-base  max-w-full whitespace-nowrap">
                         {set.weight}kg
                       </p>
                     </strong>
@@ -213,13 +214,15 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 </div>
               ))}
               <div className="flex flex-col items-center">
-                <div className="flex flex-col items-center">
+                <div
+                  className="flex flex-col items-center cursor-pointer"
+                  onClick={handleAddSet}
+                >
                   <IoAddCircle
-                    className="cursor-pointer hover:opacity-70 text-black mt-4"
+                    className=" hover:opacity-70 text-black mt-8"
                     size={32}
-                    onClick={handleAddSet}
                   />
-                  <h2 className="text-center text-m sm:text-1xl mb-5">
+                  <h2 className="text-center uppercase sm:text-1xl mb-5">
                     Add Set
                   </h2>
                 </div>
