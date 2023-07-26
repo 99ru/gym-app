@@ -133,12 +133,13 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 <p className="font-bold mr-1 truncate w-32 sm:w-auto">
                   {workout.name}
                 </p>
-                <div className="flex items-center" >
+                <div className="flex items-center">
                   <p className="text-sm font-bold text-gray-700 mr-2">
                     Total sets: {workoutSets.length}
                   </p>
                   <button
                     onClick={() => setExpanded(!isExpanded)}
+                    className=" hover:bg-gray-200 rounded" // hover:bg-gray-200 applies a light grey background when the button is hovered
                     aria-label="Toggle Expand"
                   >
                     {isExpanded ? (
@@ -153,8 +154,8 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
 
             <div className="flex items-center">
               <Menu as="div" className="relative ml-3">
-                <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
-                  <FiMoreVertical size={20} />
+                <Menu.Button className="flex  bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 hover:bg-gray-200">
+                  <FiMoreVertical size={24} />
                 </Menu.Button>
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                   <Menu.Item>
@@ -206,7 +207,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   </div>
                   <button
                     onClick={() => handleEditWorkoutSet(index)}
-                    className="p-2"
+                    className="p-2 hover:bg-gray-200 rounded" // hover:bg-gray-200 applies a light grey background when the button is hovered
                     aria-label="Edit Set"
                   >
                     <BsFillPencilFill size={16} />
