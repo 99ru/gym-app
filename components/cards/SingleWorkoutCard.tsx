@@ -12,7 +12,12 @@ import { IoAddCircle } from "react-icons/io5";
 import EditWorkoutCard from "./EditWorkoutCard";
 import { db } from "@/utils/firebase";
 import { useAuth } from "@/auth/AuthProvider";
-import { updateDoc, arrayRemove, doc, onSnapshot, setDoc } from "firebase/firestore";
+import {
+  updateDoc,
+  doc,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 
 type Props = {
   workout: WorkoutType;
@@ -42,16 +47,18 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
 
   const handleAddSet = async () => {
     const newWorkoutSet = { reps: 0, weight: 0 };
+
+    // Add the new set to local state
     setWorkoutSets((prevSets) => [...prevSets, newWorkoutSet]);
 
-    // Code to add the new set to Firestore
+    // Add the new set to Firestore
     if (currentUser) {
       const workoutRef = doc(
         db,
         `users/${currentUser.uid}/workouts/${workout.docId}`
       );
       await updateDoc(workoutRef, {
-        sets: arrayRemove(newWorkoutSet),
+        sets: [...workoutSets, newWorkoutSet],
       });
     } else {
       throw new Error("No authenticated user");
@@ -88,24 +95,26 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
     }
   };
 
-const handleDeleteSet = async (setId: number) => {
-  const updatedWorkoutSets = workoutSets.filter(
-    (_, index) => index !== setId
-  );
-  setWorkoutSets(updatedWorkoutSets);
-
-  const workoutSetsRef = doc(db, `users/${currentUser?.uid}/workouts/${workout.docId}`);
-  try {
-    await setDoc(
-      workoutSetsRef,
-      { workoutId: workout.id, sets: updatedWorkoutSets },
-      { merge: true }
+  const handleDeleteSet = async (setId: number) => {
+    const updatedWorkoutSets = workoutSets.filter(
+      (_, index) => index !== setId
     );
-  } catch (error) {
-    console.error("Error updating workout sets: ", error);
-  }
-};
+    setWorkoutSets(updatedWorkoutSets);
 
+    const workoutSetsRef = doc(
+      db,
+      `users/${currentUser?.uid}/workouts/${workout.docId}`
+    );
+    try {
+      await setDoc(
+        workoutSetsRef,
+        { workoutId: workout.id, sets: updatedWorkoutSets },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating workout sets: ", error);
+    }
+  };
 
   return (
     <div>
