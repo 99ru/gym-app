@@ -16,6 +16,7 @@ export default function dataWorkouts() {
   const { currentUser } = useContext(AuthContext);
   const [selectedWorkouts, setSelectedWorkouts] = useState<Workout[]>([]);
 
+  // delete a workout document from Firestore
   const onDelete = async (docId: string) => {
     try {
       const userId = currentUser?.uid;
@@ -28,6 +29,7 @@ export default function dataWorkouts() {
     }
   };
 
+  // Fetch and set workouts for the current user from Firestore
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
@@ -57,6 +59,7 @@ export default function dataWorkouts() {
     }
   }, [currentUser]);
 
+  // this will update the workouts in real time
   useEffect(() => {
     const userId = currentUser?.uid;
     if (userId) {
@@ -79,6 +82,7 @@ export default function dataWorkouts() {
     }
   }, [currentUser]);
 
+  // save a workout document to Firestore
   const saveWorkout = async (workout: Workout) => {
     try {
       const userId = currentUser?.uid;

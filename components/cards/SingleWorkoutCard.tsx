@@ -10,8 +10,9 @@ import { FiChevronDown, FiMoreVertical } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IoAddCircle } from "react-icons/io5";
 import EditWorkoutCard from "./EditWorkoutCard";
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { useAuth } from "@/auth/AuthProvider";
+import { updateDoc, arrayRemove, doc, onSnapshot, setDoc } from "firebase/firestore";
 
 type Props = {
   workout: WorkoutType;
@@ -19,25 +20,43 @@ type Props = {
 };
 
 const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
+  const { currentUser } = useAuth();
   const [isExpanded, setExpanded] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [editingSetIndex, setEditingSetIndex] = useState<number | null>(null);
   const [workoutSets, setWorkoutSets] = useState<WorkoutSetType[]>([]);
 
   useEffect(() => {
-    const workoutSetsRef = doc(db, "workoutSets", workout.id.toString());
+    if (currentUser) {
+      const unsubscribe = onSnapshot(
+        doc(db, `users/${currentUser.uid}/workouts/${workout.docId}`),
+        (doc) => {
+          const data = doc.data();
+          setWorkoutSets(data?.sets || []);
+        }
+      );
 
-    const unsubscribe = onSnapshot(workoutSetsRef, (snapshot) => {
-      const data = snapshot.data();
-      if (data) {
-        setWorkoutSets(data.sets);
-      }
-    });
+      return () => unsubscribe();
+    }
+  }, [workout.id, currentUser?.uid, db]);
 
-    return () => {
-      unsubscribe();
-    };
-  }, [workout.id]);
+  const handleAddSet = async () => {
+    const newWorkoutSet = { reps: 0, weight: 0 };
+    setWorkoutSets((prevSets) => [...prevSets, newWorkoutSet]);
+
+    // Code to add the new set to Firestore
+    if (currentUser) {
+      const workoutRef = doc(
+        db,
+        `users/${currentUser.uid}/workouts/${workout.docId}`
+      );
+      await updateDoc(workoutRef, {
+        sets: arrayRemove(newWorkoutSet),
+      });
+    } else {
+      throw new Error("No authenticated user");
+    }
+  };
 
   const handleEditWorkoutSet = (index: number) => {
     setEditingSetIndex(index);
@@ -53,26 +72,11 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
     setWorkoutSets(updatedWorkoutSets);
     setEditing(false);
 
-    const workoutSetsRef = doc(db, "workoutSets", workout.id.toString());
-
-    try {
-      await setDoc(
-        workoutSetsRef,
-        { workoutId: workout.id, sets: updatedWorkoutSets },
-        { merge: true }
-      );
-    } catch (error) {
-      console.error("Error updating workout sets: ", error);
-    }
-  };
-
-  const handleDeleteSet = async (setId: number) => {
-    const updatedWorkoutSets = workoutSets.filter(
-      (_, index) => index !== setId
+    const workoutSetsRef = doc(
+      db,
+      `users/${currentUser?.uid}/workouts/${workout.docId}`
     );
-    setWorkoutSets(updatedWorkoutSets);
 
-    const workoutSetsRef = doc(db, "workoutSets", workout.id.toString());
     try {
       await setDoc(
         workoutSetsRef,
@@ -83,6 +87,25 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
       console.error("Error updating workout sets: ", error);
     }
   };
+
+const handleDeleteSet = async (setId: number) => {
+  const updatedWorkoutSets = workoutSets.filter(
+    (_, index) => index !== setId
+  );
+  setWorkoutSets(updatedWorkoutSets);
+
+  const workoutSetsRef = doc(db, `users/${currentUser?.uid}/workouts/${workout.docId}`);
+  try {
+    await setDoc(
+      workoutSetsRef,
+      { workoutId: workout.id, sets: updatedWorkoutSets },
+      { merge: true }
+    );
+  } catch (error) {
+    console.error("Error updating workout sets: ", error);
+  }
+};
+
 
   return (
     <div>
@@ -181,32 +204,16 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 </div>
               ))}
               <div className="flex flex-col items-center">
-                <IoAddCircle
-                  className="cursor-pointer hover:opacity-70 text-black mt-4"
-                  size={32}
-                  onClick={async () => {
-                    const newWorkoutSets = [
-                      ...workoutSets,
-                      { reps: 0, weight: 0 },
-                    ];
-                    setWorkoutSets(newWorkoutSets);
-                    const workoutSetsRef = doc(
-                      db,
-                      "workoutSets",
-                      workout.id.toString()
-                    );
-                    try {
-                      await setDoc(
-                        workoutSetsRef,
-                        { workoutId: workout.id, sets: newWorkoutSets },
-                        { merge: true }
-                      );
-                    } catch (error) {
-                      console.error("Error updating workout sets: ", error);
-                    }
-                  }}
-                />
-                <h2 className="text-center text-m sm:text-1xl mb-5">Add Set</h2>
+                <div className="flex flex-col items-center">
+                  <IoAddCircle
+                    className="cursor-pointer hover:opacity-70 text-black mt-4"
+                    size={32}
+                    onClick={handleAddSet}
+                  />
+                  <h2 className="text-center text-m sm:text-1xl mb-5">
+                    Add Set
+                  </h2>
+                </div>
               </div>
             </div>
           )}

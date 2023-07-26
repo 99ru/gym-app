@@ -5,7 +5,7 @@ import { db } from "../utils/firebase";
 import { useAuth } from "../auth/AuthProvider";
 import useWorkoutsData from "../utils/workoutData";
 import MuscleButton from "./MuscleButton";
-import WorkoutDialog from "./WorkoutDialog";
+import WorkoutDialog from "./WorkoutList";
 import { IoCloseSharp } from "react-icons/io5";
 
 type Props = {
@@ -16,10 +16,14 @@ type Props = {
 const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   const { currentUser } = useAuth();
   const { selectedWorkouts } = useWorkoutsData();
+
+  // State to manage the selected muscle and WorkoutDialog visibility
   const [state, setState] = useState<{
     selectedMuscle: string | null;
     open: boolean;
   }>({ selectedMuscle: null, open: false });
+
+  // List of muscle groups
   const muscles = [
     "Shoulders",
     "Biceps",
@@ -35,20 +39,22 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
     setState({ selectedMuscle: muscle, open: true });
   };
 
-  const handleCloseClick = () => {
-    console.log("Close button clicked");
-  };
-
-  const handleWorkoutClick = async (workout: Workout) => {
+ const handleWorkoutClick = async (workout: Workout) => {
     if (currentUser) {
+          // Check if the workout exist in firestore
       if (
         !selectedWorkouts.some(
           (selectedWorkout) => selectedWorkout.id === workout.id
         )
       ) {
+        const workoutWithSets = {
+          ...workout,
+          sets: [{ reps: 0, weight: 0 }]  // Initialize with empty set
+        };
+
         await addDoc(
           collection(db, `users/${currentUser.uid}/workouts`),
-          workout
+          workoutWithSets
         );
         setState({ selectedMuscle: null, open: false });
         setIsAddingWorkout(false);
@@ -58,7 +64,8 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
     } else {
       throw new Error("No authenticated user");
     }
-  };
+};
+
 
   const handleClose = () => {
     setState({ selectedMuscle: null, open: false });

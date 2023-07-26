@@ -1,14 +1,12 @@
 import React from 'react';
-import { BsFillPencilFill } from 'react-icons/bs';
 import { WorkoutSet as WorkoutSetType } from '../../utils/types';
 
 type Props = {
   set: WorkoutSetType;
   index: number;
-  onEditSet: (index: number) => void;
 };
 
-const WorkoutSet: React.FC<Props> = ({ set, index, onEditSet }) => (
+const WorkoutSet: React.FC<Props> = ({ set, index,  }) => (
   <div
     className="border-b text-black p-2 rounded-lg my-2 flex items-center justify-between space-x-2 "
   >
@@ -38,13 +36,6 @@ const WorkoutSet: React.FC<Props> = ({ set, index, onEditSet }) => (
         </p>
       </strong>
     </div>
-    <button
-      onClick={() => onEditSet(index)}
-      className="p-2"
-      aria-label="Edit Set"
-    >
-      <BsFillPencilFill size={16} />
-    </button>
   </div>
 );
 

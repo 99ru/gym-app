@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Workout as WorkoutType,
-  WorkoutSet as WorkoutSetType,
 } from "../../utils/types";
 import { db } from "../../utils/firebase";
 import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
@@ -9,9 +8,11 @@ import SingleWorkoutCard from "./SingleWorkoutCard";
 import { useAuth } from "../../auth/AuthProvider";
 
 const WorkoutCards: React.FC = () => {
-  const [savedWorkouts, setSavedWorkouts] = useState<WorkoutType[]>([]);
+  // store current user's workouts
+  const [savedWorkouts, setSavedWorkouts] = useState<WorkoutType[]>([]); 
   const { currentUser } = useAuth();
-
+  
+  // Fetch saved workouts from Firestore and keep it in sync with real-time updates
   useEffect(() => {
     if (currentUser) {
       const workoutsCollection = collection(

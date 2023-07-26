@@ -21,8 +21,6 @@ const googleProvider = new GoogleAuthProvider();
 export const signInWithGoogle = () => {
   return signInWithPopup(auth, googleProvider);
 };
-
-
 export const signInAsGuest = () => {
   return signInAnonymously(auth);
 };
