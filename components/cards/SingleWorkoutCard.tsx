@@ -76,7 +76,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
 
     const workoutSetsRef = doc(
       db,
-      `users/${currentUser?.uid}/workouts/${workout.docId}`
+      `users/${currentUser?.uid}/workouts/${workout.docId}` 
     );
 
     try {
