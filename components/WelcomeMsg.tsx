@@ -17,10 +17,11 @@ const WelcomeMsg: React.FC<Props> = ({ onClose }) => {
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
           <div className="inline-block max-w-md p-6 my-8 overflow-hidden text-center align-middle transition-all transform bg-white shadow-xl rounded-xl">
             <h3 className="text-xl font-semibold text-black mb-2">
-              Use the "Add Workout" button above to get started.
+             Use the &ldquo;Add Workout&rdquo; button above to get started.
+
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              {"More features coming soon!🌞"}
+              More features coming soon!🌞
             </p>
 
             <button
