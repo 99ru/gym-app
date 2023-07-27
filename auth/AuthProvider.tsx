@@ -1,6 +1,6 @@
-import React, { createContext, useContext, ReactNode, useEffect, useState } from 'react';
-import { auth } from '../utils/firebase';
-import { User } from 'firebase/auth';
+import React, { createContext, useContext, ReactNode, useEffect, useState } from "react";
+import { auth, doc } from "../utils/firebase";
+import { User } from "firebase/auth";
 
 interface AuthContextProps {
   currentUser: User | null;
@@ -9,12 +9,12 @@ interface AuthContextProps {
   logout: () => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextProps>({ 
-  currentUser: null, 
-  setCurrentUser: () => {}, 
-  loading: true, 
-  logout: async () => {} 
-}); 
+export const AuthContext = createContext<AuthContextProps>({
+  currentUser: null,
+  setCurrentUser: () => {},
+  loading: true,
+  logout: async () => {},
+});
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -23,10 +23,15 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
+
       setLoading(false);
     });
 
@@ -38,7 +43,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, loading, logout }}>  
+    <AuthContext.Provider
+      value={{ currentUser, setCurrentUser, loading, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
