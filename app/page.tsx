@@ -3,8 +3,8 @@ import React, { useContext, useState, useEffect } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
-import AddNew from "../components/addworkout/AddNew";
-import SelectWorkout from "../components/addworkout/SelectWorkout";
+import AddWorkout from "@/components/addworkout/AddNew";
+import SelectWorkout from "@/components/addworkout/SelectWorkout";
 import WorkoutCards from "../components/cards/WorkoutCards";
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
@@ -14,10 +14,9 @@ const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
   const workouts = workoutsData.workouts;
   const [showWelcomeMsg, setShowWelcomeMsg] = useState(false);
-  const [isAddingWorkout, setIsAddingWorkout] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  // checks if the user is logging in for the first time
+  const [isAddingWorkout, setIsAddingWorkout] = useState(false);
+
   useEffect(() => {
     const isFirstLogin = localStorage.getItem("firstLogin") === null;
     if (isFirstLogin && currentUser) {
@@ -36,10 +35,9 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Nav onDateChange={setSelectedDate} />
-
+      <Nav />
       {!isAddingWorkout && (
-        <AddNew setIsAddingWorkout={setIsAddingWorkout} />
+        <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
       )}
       {isAddingWorkout && (
         <SelectWorkout
@@ -50,7 +48,6 @@ const Home: React.FC = () => {
       <div className="flex-grow">
         <WorkoutCards />
       </div>
-      
       <Footer />
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />

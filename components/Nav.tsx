@@ -5,10 +5,8 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { AuthContext } from "@/auth/AuthProvider";
 import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
-import Calendar from "./ui/Calendar";
 
-export function Nav({ onDateChange }: { onDateChange: (date: Date) => void }) {
-
+export function Nav() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { currentUser, logout } = useContext(AuthContext);
 
@@ -43,9 +41,7 @@ export function Nav({ onDateChange }: { onDateChange: (date: Date) => void }) {
                 </div>
               </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:block">
-              <Calendar onDateChange={onDateChange} />
-            </div>
+            <div className="hidden sm:ml-6 sm:block"></div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="relative ml-3">

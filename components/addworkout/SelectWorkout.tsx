@@ -7,7 +7,6 @@ import data from "../../utils/data";
 import MuscleButton from "../MuscleButton";
 import WorkoutDialog from "../dialogs/SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
-import { serverTimestamp } from "firebase/firestore";
 import { formatISO } from "date-fns";
 
 type Props = {
