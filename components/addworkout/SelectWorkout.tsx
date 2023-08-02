@@ -16,7 +16,7 @@ type Props = {
 
 const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   const { currentUser } = useAuth();
-  const { workouts: selectedWorkouts } = useWorkouts(new Date());
+  const { workouts: selectedWorkouts } = useWorkouts();
 
   const [state, setState] = useState<{
     selectedMuscle: string | null;

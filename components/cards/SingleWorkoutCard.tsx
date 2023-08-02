@@ -139,7 +139,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   </p>
                   <button
                     onClick={() => setExpanded(!isExpanded)}
-                    className=" hover:bg-gray-200 rounded" // hover:bg-gray-200 applies a light grey background when the button is hovered
+                    className=" hover:bg-gray-200 rounded"
                     aria-label="Toggle Expand"
                   >
                     {isExpanded ? (
@@ -207,7 +207,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   </div>
                   <button
                     onClick={() => handleEditWorkoutSet(index)}
-                    className="p-2 hover:bg-gray-200 rounded" // hover:bg-gray-200 applies a light grey background when the button is hovered
+                    className="p-2 hover:bg-gray-200 rounded" 
                     aria-label="Edit Set"
                   >
                     <BsFillPencilFill size={16} />
