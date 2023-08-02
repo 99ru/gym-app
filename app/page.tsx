@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
-import AddWorkout from "../components/addworkout/AddWorkout";
+import AddNew from "../components/addworkout/AddNew";
 import SelectWorkout from "../components/addworkout/SelectWorkout";
 import WorkoutCards from "../components/cards/WorkoutCards";
 import LoginPage from "../app/login/page";
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
       <Nav onDateChange={setSelectedDate} />
 
       {!isAddingWorkout && (
-        <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
+        <AddNew setIsAddingWorkout={setIsAddingWorkout} />
       )}
       {isAddingWorkout && (
         <SelectWorkout
