@@ -5,10 +5,11 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { AuthContext } from "@/auth/AuthProvider";
 import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
+import { GiGymBag } from "react-icons/gi";
 
 export function Nav() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { currentUser, logout } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <nav className="bg-dark">
@@ -30,15 +31,7 @@ export function Nav() {
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/">
-                <div className="flex items-center space-x-2">
-                  <Image
-                    src="/barbell.svg"
-                    alt="User Icon"
-                    width={40}
-                    height={40}
-                  />
-                  <h1 className="text-white">GETFIT</h1>
-                </div>
+                <GiGymBag className="text-white h-10 w-auto" />
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block"></div>
