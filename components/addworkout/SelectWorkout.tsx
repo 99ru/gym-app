@@ -14,7 +14,7 @@ type Props = {
   setIsAddingWorkout: (show: boolean) => void;
 };
 
-const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
+const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   const { currentUser } = useAuth();
   const { selectedWorkouts } = useWorkoutsData();
 
@@ -90,4 +90,4 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   );
 };
 
-export default SelectMuscle;
+export default SelectWorkout;

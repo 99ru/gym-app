@@ -4,7 +4,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
 import AddWorkout from "../components/addworkout/AddWorkout";
-import SelectMuscle from "../components/addworkout/SelectMuscle";
+import SelectWorkout from "../components/addworkout/SelectWorkout";
 import WorkoutCards from "../components/cards/WorkoutCards";
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
         <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
       )}
       {isAddingWorkout && (
-        <SelectMuscle
+        <SelectWorkout
           workouts={workouts}
           setIsAddingWorkout={setIsAddingWorkout}
         />
