@@ -14,9 +14,10 @@ const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
   const workouts = workoutsData.workouts;
   const [showWelcomeMsg, setShowWelcomeMsg] = useState(false);
-
   const [isAddingWorkout, setIsAddingWorkout] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
+  // checks if the user is logging in for the first time
   useEffect(() => {
     const isFirstLogin = localStorage.getItem("firstLogin") === null;
     if (isFirstLogin && currentUser) {
@@ -35,7 +36,8 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Nav />
+      <Nav onDateChange={setSelectedDate} />
+
       {!isAddingWorkout && (
         <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
       )}
@@ -48,6 +50,7 @@ const Home: React.FC = () => {
       <div className="flex-grow">
         <WorkoutCards />
       </div>
+      
       <Footer />
       {showWelcomeMsg && (
         <WelcomeMsg onClose={() => setShowWelcomeMsg(false)} />

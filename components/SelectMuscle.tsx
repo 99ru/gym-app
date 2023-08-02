@@ -7,6 +7,8 @@ import useWorkoutsData from "../utils/workoutData";
 import MuscleButton from "./MuscleButton";
 import WorkoutDialog from "./WorkoutList";
 import { IoCloseSharp } from "react-icons/io5";
+import { serverTimestamp } from "firebase/firestore"; 
+
 
 type Props = {
   workouts: Workout[];
@@ -40,32 +42,32 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   };
 
  const handleWorkoutClick = async (workout: Workout) => {
-    if (currentUser) {
-          // Check if the workout exist in firestore
-      if (
-        !selectedWorkouts.some(
-          (selectedWorkout) => selectedWorkout.id === workout.id
-        )
-      ) {
-        const workoutWithSets = {
-          ...workout,
-          sets: [{ reps: 0, weight: 0 }]  // Initialize with empty set
-        };
+  if (currentUser) {
+    // Check if the workout exist in firestore
+    if (
+      !selectedWorkouts.some(
+        (selectedWorkout) => selectedWorkout.id === workout.id
+      )
+    ) {
+      const workoutWithSets = {
+        ...workout,
+        sets: [{ reps: 0, weight: 0 }], // Initialize with empty set
+        date: serverTimestamp() // Add timestamp here
+      };
 
-        await addDoc(
-          collection(db, `users/${currentUser.uid}/workouts`),
-          workoutWithSets
-        );
-        setState({ selectedMuscle: null, open: false });
-        setIsAddingWorkout(false);
-      } else {
-        console.log("This workout has already been added");
-      }
+      await addDoc(
+        collection(db, `users/${currentUser.uid}/workouts`),
+        workoutWithSets
+      );
+      setState({ selectedMuscle: null, open: false });
+      setIsAddingWorkout(false);
     } else {
-      throw new Error("No authenticated user");
+      console.log("This workout has already been added");
     }
+  } else {
+    throw new Error("No authenticated user");
+  }
 };
-
 
   const handleClose = () => {
     setState({ selectedMuscle: null, open: false });
