@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Workout } from "../../utils/types";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../utils/firebase";
@@ -7,8 +7,7 @@ import useWorkoutsData from "../../utils/workoutData";
 import MuscleButton from "../MuscleButton";
 import WorkoutDialog from "../dialogs/SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
-import { serverTimestamp } from "firebase/firestore"; 
-
+import { serverTimestamp } from "firebase/firestore";
 
 type Props = {
   workouts: Workout[];
@@ -19,60 +18,47 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   const { currentUser } = useAuth();
   const { selectedWorkouts } = useWorkoutsData();
 
-  // State to manage the selected muscle and WorkoutDialog visibility
   const [state, setState] = useState<{
     selectedMuscle: string | null;
     open: boolean;
   }>({ selectedMuscle: null, open: false });
 
-  // List of muscle groups
-  const muscles = [
-    "Shoulders",
-    "Biceps",
-    "Triceps",
-    "Legs",
-    "Back",
-    "Chest",
-    "Abs",
-    "Full Body",
-  ];
+  const { selectedMuscle, open } = state;
 
-  const handleButtonClick = (muscle: string) => {
-    setState({ selectedMuscle: muscle, open: true });
-  };
-
- const handleWorkoutClick = async (workout: Workout) => {
-  if (currentUser) {
-    // Check if the workout exist in firestore
-    if (
-      !selectedWorkouts.some(
-        (selectedWorkout) => selectedWorkout.id === workout.id
-      )
-    ) {
-      const workoutWithSets = {
-        ...workout,
-        sets: [{ reps: 0, weight: 0 }], // Initialize with empty set
-        date: serverTimestamp() // Add timestamp here
-      };
-
-      await addDoc(
-        collection(db, `users/${currentUser.uid}/workouts`),
-        workoutWithSets
-      );
-      setState({ selectedMuscle: null, open: false });
-      setIsAddingWorkout(false);
-    } else {
-      console.log("This workout has already been added");
-    }
-  } else {
-    throw new Error("No authenticated user");
-  }
-};
-
-  const handleClose = () => {
-    setState({ selectedMuscle: null, open: false });
+  const handleClose = useCallback(() => {
+    setState((prevState) => ({ ...prevState, selectedMuscle: null, open: false }));
     setIsAddingWorkout(false);
+  }, [setIsAddingWorkout]);
+
+  const handleButtonClick = useCallback(
+    (muscle: string) => {
+      setState({ selectedMuscle: muscle, open: true });
+    },
+    []
+  );
+
+  const handleWorkoutClick = async (workout: Workout) => {
+    if (currentUser) {
+      // Check if the workout exists in Firestore
+      if (!selectedWorkouts.some((selectedWorkout) => selectedWorkout.id === workout.id)) {
+        const workoutWithSets = {
+          ...workout,
+          sets: [{ reps: 0, weight: 0 }], // Initialize with an empty set
+          date: serverTimestamp(), // Add timestamp here
+        };
+
+        await addDoc(collection(db, `users/${currentUser.uid}/workouts`), workoutWithSets);
+        handleClose();
+        setIsAddingWorkout(false);
+      } else {
+        console.log("This workout has already been added");
+      }
+    } else {
+      throw new Error("No authenticated user");
+    }
   };
+
+  const muscles = ["Shoulders", "Biceps", "Triceps", "Legs", "Back", "Chest", "Abs", "Full Body"];
 
   return (
     <section className="flex justify-center mt-20">
@@ -83,7 +69,7 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
             <MuscleButton
               key={muscle}
               muscle={muscle}
-              selectedMuscle={state.selectedMuscle}
+              selectedMuscle={selectedMuscle}
               onClick={handleButtonClick}
             />
           ))}
@@ -93,8 +79,8 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
           className="absolute top-2 right-2 cursor-pointer text-2xl text-gray-500"
         />
         <WorkoutDialog
-          open={state.open}
-          selectedMuscle={state.selectedMuscle}
+          open={open}
+          selectedMuscle={selectedMuscle}
           workouts={workouts}
           onClose={handleClose}
           onWorkoutClick={handleWorkoutClick}
