@@ -25,19 +25,19 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
 
   const { selectedMuscle, open } = state;
 
-  const handleClose = useCallback(() => {
+  const handleDialogClose  = useCallback(() => {
     setState((prevState) => ({ ...prevState, selectedMuscle: null, open: false }));
     setIsAddingWorkout(false);
   }, [setIsAddingWorkout]);
 
-  const handleButtonClick = useCallback(
+  const handleMuscleButtonClick  = useCallback(
     (muscle: string) => {
       setState({ selectedMuscle: muscle, open: true });
     },
     []
   );
 
-  const handleWorkoutClick = async (workout: Workout) => {
+  const handleAddWorkout  = async (workout: Workout) => {
     if (currentUser) {
       // Check if the workout exists in Firestore
       if (!selectedWorkouts.some((selectedWorkout) => selectedWorkout.id === workout.id)) {
@@ -48,7 +48,7 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
         };
 
         await addDoc(collection(db, `users/${currentUser.uid}/workouts`), workoutWithSets);
-        handleClose();
+        handleDialogClose ();
         setIsAddingWorkout(false);
       } else {
         console.log("This workout has already been added");
@@ -70,20 +70,20 @@ const SelectMuscle: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
               key={muscle}
               muscle={muscle}
               selectedMuscle={selectedMuscle}
-              onClick={handleButtonClick}
+              onClick={handleMuscleButtonClick }
             />
           ))}
         </div>
         <IoCloseSharp
-          onClick={handleClose}
+          onClick={handleDialogClose }
           className="absolute top-2 right-2 cursor-pointer text-2xl text-gray-500"
         />
         <WorkoutDialog
           open={open}
           selectedMuscle={selectedMuscle}
           workouts={workouts}
-          onClose={handleClose}
-          onWorkoutClick={handleWorkoutClick}
+          onClose={handleDialogClose }
+          onWorkoutClick={handleAddWorkout }
         />
       </div>
     </section>
