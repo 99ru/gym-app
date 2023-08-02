@@ -11,7 +11,7 @@ import {
 import { db } from "./firebase";
 import { AuthContext } from "@/auth/AuthProvider";
 
-export default function dataWorkouts() {
+export default function data() {
   const { currentUser } = useContext(AuthContext);
   const [selectedWorkouts, setSelectedWorkouts] = useState<Workout[]>([]);
 

@@ -3,7 +3,7 @@ import { Workout } from "../../utils/types";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { useAuth } from "../../auth/AuthProvider";
-import useWorkoutsData from "../../utils/workoutData";
+import data from "../../utils/data";
 import MuscleButton from "../MuscleButton";
 import WorkoutDialog from "../dialogs/SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
@@ -16,7 +16,7 @@ type Props = {
 
 const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   const { currentUser } = useAuth();
-  const { selectedWorkouts } = useWorkoutsData();
+  const { selectedWorkouts } = data();
 
   const [state, setState] = useState<{
     selectedMuscle: string | null;
