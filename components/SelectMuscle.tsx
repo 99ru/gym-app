@@ -5,7 +5,7 @@ import { db } from "../utils/firebase";
 import { useAuth } from "../auth/AuthProvider";
 import useWorkoutsData from "../utils/workoutData";
 import MuscleButton from "./MuscleButton";
-import WorkoutDialog from "./WorkoutList";
+import WorkoutDialog from "./SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
 import { serverTimestamp } from "firebase/firestore"; 
 

@@ -8,7 +8,6 @@ import SingleWorkoutCard from "./SingleWorkoutCard";
 import { useAuth } from "../../auth/AuthProvider";
 
 const WorkoutCards: React.FC = () => {
-  // store current user's workouts
   const [savedWorkouts, setSavedWorkouts] = useState<WorkoutType[]>([]); 
   const { currentUser } = useAuth();
   
@@ -34,14 +33,14 @@ const WorkoutCards: React.FC = () => {
     }
   }, [currentUser]);
 
-  const handleDeleteWorkout = async (docId: string) => {
-    const docRef = doc(db, `users/${currentUser?.uid}/workouts`, docId);
-    await deleteDoc(docRef);
+const handleDeleteWorkout = async (docId: string) => {
+  const docRef = doc(db, `users/${currentUser?.uid}/workouts`, docId);
+  await deleteDoc(docRef);
 
-    setSavedWorkouts(
-      savedWorkouts.filter((workout) => workout.docId !== docId)
-    );
-  };
+  setSavedWorkouts((prevWorkouts) =>
+    prevWorkouts.filter((workout) => workout.docId !== docId)
+  );
+};
 
   return (
     <div className="flex flex-col items-center">
