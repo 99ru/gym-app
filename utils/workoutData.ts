@@ -1,4 +1,3 @@
-'use client'
 import { useEffect, useState, useContext } from "react";
 import { Workout } from "./types";
 import {
@@ -70,7 +69,7 @@ export default function dataWorkouts() {
         snapshot.forEach((doc) => {
           const workoutData = {
             ...doc.data(),
-            docId: doc.id, 
+            docId: doc.id,
           } as Workout;
           workouts.push(workoutData);
         });
