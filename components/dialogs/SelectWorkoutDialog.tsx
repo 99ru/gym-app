@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
-import { Workout } from "../utils/types";
+import { Workout } from "../../utils/types";
 
 type WorkoutDialogProps = {
   open: boolean;

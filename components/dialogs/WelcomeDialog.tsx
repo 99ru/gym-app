@@ -5,7 +5,7 @@ type Props = {
   onClose: () => void;
 };
 
-const WelcomeMsg: React.FC<Props> = ({ onClose }) => {
+const WelcomeDialog: React.FC<Props> = ({ onClose }) => {
   return (
     <Transition show={true} as={React.Fragment}>
       <Dialog
@@ -37,4 +37,4 @@ const WelcomeMsg: React.FC<Props> = ({ onClose }) => {
   );
 };
 
-export default WelcomeMsg;
+export default WelcomeDialog;

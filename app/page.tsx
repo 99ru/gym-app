@@ -2,9 +2,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
-import WelcomeMsg from "@/components/WelcomeMsg";
-import AddWorkout from "../components/AddWorkout";
-import SelectMuscle from "../components/SelectMuscle";
+import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
+import AddWorkout from "../components/addworkout/AddWorkout";
+import SelectMuscle from "../components/addworkout/SelectMuscle";
 import WorkoutCards from "../components/cards/WorkoutCards";
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
       
       <Footer />
       {showWelcomeMsg && (
-        <WelcomeMsg onClose={() => setShowWelcomeMsg(false)} />
+        <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />
       )}
     </>
   );

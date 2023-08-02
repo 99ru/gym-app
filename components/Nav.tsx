@@ -5,7 +5,7 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { AuthContext } from "@/auth/AuthProvider";
 import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
-import Calendar from "./Calendar";
+import Calendar from "./ui/Calendar";
 
 export function Nav({ onDateChange }: { onDateChange: (date: Date) => void }) {
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Workout } from "../utils/types";
+import { Workout } from "../../utils/types";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../utils/firebase";
-import { useAuth } from "../auth/AuthProvider";
-import useWorkoutsData from "../utils/workoutData";
-import MuscleButton from "./MuscleButton";
-import WorkoutDialog from "./SelectWorkoutDialog";
+import { db } from "../../utils/firebase";
+import { useAuth } from "../../auth/AuthProvider";
+import useWorkoutsData from "../../utils/workoutData";
+import MuscleButton from "../MuscleButton";
+import WorkoutDialog from "../dialogs/SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
 import { serverTimestamp } from "firebase/firestore"; 
 
