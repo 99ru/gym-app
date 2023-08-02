@@ -2,9 +2,10 @@ import React, { useState, forwardRef, ForwardedRef } from "react";
 import DatePicker from "react-datepicker";
 import { FcCalendar } from "react-icons/fc";
 import "react-datepicker/dist/react-datepicker.css";
+import dayjs from 'dayjs';
 
 interface CalendarProps {
-  onDateChange: (date: Date) => void;
+  onDateChange: (date: string) => void; // Change Date to string
 }
 
 type CustomInputProps = {
@@ -33,7 +34,9 @@ const Calendar: React.FC<CalendarProps> = ({ onDateChange }) => {
       selected={selectedDate}
       onChange={(date: Date) => {
         setSelectedDate(date);
-        onDateChange(date);
+        const formattedDate = dayjs(date).format('YYYY-MM-DD');
+        /* console.log(formattedDate); */
+        onDateChange(formattedDate);
       }}
       customInput={<CustomInput />}
       open={isOpen}

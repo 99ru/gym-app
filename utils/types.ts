@@ -3,6 +3,7 @@ export type Workout = {
   name: string;
   image: string;
   muscle: string;
+  date: string;
   docId?: string; 
 };
 
