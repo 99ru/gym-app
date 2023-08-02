@@ -1,27 +1,22 @@
-
 import { useEffect, useState } from "react";
 import { Workout } from "@/utils/types";
 import { db } from "@/utils/firebase";
-import { doc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
+import { doc, addDoc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
 import { useAuth } from "@/auth/AuthProvider";
 
 const useWorkouts = () => {
-  const [savedWorkouts, setSavedWorkouts] = useState<Workout[]>([]);
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
   const { currentUser } = useAuth();
 
   useEffect(() => {
     if (currentUser) {
-      const workoutsCollection = collection(
-        db,
-        `users/${currentUser.uid}/workouts`
-      );
-
+      const workoutsCollection = collection(db, `users/${currentUser.uid}/workouts`);
       const unsubscribe = onSnapshot(workoutsCollection, (snapshot) => {
         const workouts = snapshot.docs.map((doc) => ({
           docId: doc.id,
           ...doc.data(),
         }));
-        setSavedWorkouts(workouts as Workout[]);
+        setWorkouts(workouts as Workout[]);
       });
 
       return () => {
@@ -30,16 +25,18 @@ const useWorkouts = () => {
     }
   }, [currentUser]);
 
-  const handleDeleteWorkout = async (docId: string) => {
+  const deleteWorkout = async (docId: string) => {
     const docRef = doc(db, `users/${currentUser?.uid}/workouts`, docId);
     await deleteDoc(docRef);
-
-    setSavedWorkouts((prevWorkouts) =>
-      prevWorkouts.filter((workout) => workout.docId !== docId)
-    );
+    setWorkouts((prevWorkouts) => prevWorkouts.filter((workout) => workout.docId !== docId));
   };
 
-  return { savedWorkouts, handleDeleteWorkout };
+  const saveWorkout = async (workout: Workout) => {
+    const docRef = collection(db, `users/${currentUser?.uid}/workouts`);
+    await addDoc(docRef, workout);
+  };
+
+  return { workouts, deleteWorkout, saveWorkout };
 };
 
 export default useWorkouts;

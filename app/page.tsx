@@ -10,11 +10,13 @@ import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
   const workouts = workoutsData.workouts;
   const [showWelcomeMsg, setShowWelcomeMsg] = useState(false);
-
   const [isAddingWorkout, setIsAddingWorkout] = useState(false);
 
   useEffect(() => {
@@ -41,12 +43,14 @@ const Home: React.FC = () => {
       )}
       {isAddingWorkout && (
         <SelectWorkout
-          workouts={workouts}
+          workouts={workouts} 
           setIsAddingWorkout={setIsAddingWorkout}
         />
       )}
       <div className="flex-grow">
-        <WorkoutCards />
+
+      <WorkoutCards />
+
       </div>
       <Footer />
       {showWelcomeMsg && (
