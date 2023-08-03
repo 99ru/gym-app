@@ -2,10 +2,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
-import WelcomeMsg from "@/components/WelcomeMsg";
-import AddWorkout from "../components/AddWorkout";
-import SelectMuscle from "../components/SelectMuscle";
-import WorkoutCards from "../components/cards/WorkoutCards";
+import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
+import SelectWorkout from "@/components/SelectWorkout";
+import WorkoutCards from "@/components/cards/WorkoutCards";
+import Menu from "@/components/ui/Menu";
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
@@ -14,8 +14,9 @@ const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
   const workouts = workoutsData.workouts;
   const [showWelcomeMsg, setShowWelcomeMsg] = useState(false);
-
   const [isAddingWorkout, setIsAddingWorkout] = useState(false);
+
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // date picker
 
   useEffect(() => {
     const isFirstLogin = localStorage.getItem("firstLogin") === null;
@@ -36,21 +37,26 @@ const Home: React.FC = () => {
   return (
     <>
       <Nav />
-      {!isAddingWorkout && (
-        <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
-      )}
+
       {isAddingWorkout && (
-        <SelectMuscle
+        <SelectWorkout
           workouts={workouts}
           setIsAddingWorkout={setIsAddingWorkout}
+          selectedDate={selectedDate}
         />
       )}
-      <div className="flex-grow">
-        <WorkoutCards />
-      </div>
+
+      <Menu
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        setIsAddingWorkout={setIsAddingWorkout}
+      />
+      <WorkoutCards selectedDate={selectedDate} />
+
       <Footer />
+
       {showWelcomeMsg && (
-        <WelcomeMsg onClose={() => setShowWelcomeMsg(false)} />
+        <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />
       )}
     </>
   );

@@ -1,55 +1,35 @@
-import React, { useEffect, useState } from "react";
-import {
-  Workout as WorkoutType,
-} from "../../utils/types";
-import { db } from "../../utils/firebase";
-import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
+import React from "react";
+import useWorkouts from "@/hooks/useWorkouts";
 import SingleWorkoutCard from "./SingleWorkoutCard";
-import { useAuth } from "../../auth/AuthProvider";
+import { Workout } from "@/utils/types";
+import { format } from "date-fns"; // import the format function from date-fns
 
-const WorkoutCards: React.FC = () => {
-  // store current user's workouts
-  const [savedWorkouts, setSavedWorkouts] = useState<WorkoutType[]>([]); 
-  const { currentUser } = useAuth();
+interface WorkoutCardsProps {
+  selectedDate: Date;
+}
+
+const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
+  const { workouts, deleteWorkout } = useWorkouts();
   
-  // Fetch saved workouts from Firestore and keep it in sync with real-time updates
-  useEffect(() => {
-    if (currentUser) {
-      const workoutsCollection = collection(
-        db,
-        `users/${currentUser.uid}/workouts`
-      );
+  // Format the selectedDate to "YYYY-MM-DD"
+  const formattedSelectedDate = format(selectedDate, 'yyyy-MM-dd');
 
-      const unsubscribe = onSnapshot(workoutsCollection, (snapshot) => {
-        const workouts = snapshot.docs.map((doc) => ({
-          docId: doc.id,
-          ...doc.data(),
-        }));
-        setSavedWorkouts(workouts as WorkoutType[]);
-      });
-
-      return () => {
-        unsubscribe();
-      };
-    }
-  }, [currentUser]);
-
-  const handleDeleteWorkout = async (docId: string) => {
-    const docRef = doc(db, `users/${currentUser?.uid}/workouts`, docId);
-    await deleteDoc(docRef);
-
-    setSavedWorkouts(
-      savedWorkouts.filter((workout) => workout.docId !== docId)
-    );
-  };
+  // Filter the workouts based on the selected date
+ const filteredWorkouts = workouts.filter((workout: Workout) => {
+  if (workout.date) { // Check if date is defined
+    return format(new Date(workout.date), 'yyyy-MM-dd') === formattedSelectedDate;
+  } else {
+    return false;
+  }
+});
 
   return (
     <div className="flex flex-col items-center">
-      {savedWorkouts.map((workout) => (
+      {filteredWorkouts.map((workout: Workout) => (
         <SingleWorkoutCard
           key={workout.id}
           workout={workout}
-          onDelete={handleDeleteWorkout}
+          onDelete={() => workout.docId && deleteWorkout(workout.docId)}
         />
       ))}
     </div>
