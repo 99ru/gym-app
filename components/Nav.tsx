@@ -5,9 +5,7 @@ import { AuthContext } from "@/auth/AuthProvider";
 import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
 import { CgGym } from "react-icons/cg";
-
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import {BiDumbbell} from "react-icons/bi";
 
 
 
@@ -21,7 +19,7 @@ export const Nav: React.FC = () => {
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 flex items-center">
             <Link href="/">
-              <CgGym className="text-white h-10 w-auto" />
+              <CgGym className="text-white" size={40} />
             </Link>
           </div>
           
