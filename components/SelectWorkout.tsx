@@ -59,7 +59,7 @@ const handleAddWorkout = async (workout: Workout) => {
       handleDialogClose();
       setIsAddingWorkout(false);
     } else {
-      console.log("This workout has already been added on this date");
+      alert("This workout has already been added");
     }
   } else {
     throw new Error("No authenticated user");
