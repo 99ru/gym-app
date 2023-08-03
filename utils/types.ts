@@ -3,11 +3,11 @@ export type Workout = {
   name: string;
   image: string;
   muscle: string;
-  date: string;
+  date?: string;
   docId?: string; 
 };
 
-export type WorkoutSet = {
+/* export type WorkoutSet = {
   reps: number;
   weight: number;
-};
+}; */

@@ -15,10 +15,13 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
   const formattedSelectedDate = format(selectedDate, 'yyyy-MM-dd');
 
   // Filter the workouts based on the selected date
-  const filteredWorkouts = workouts.filter(
-    (workout: Workout) =>
-      format(new Date(workout.date), 'yyyy-MM-dd') === formattedSelectedDate
-  );
+ const filteredWorkouts = workouts.filter((workout: Workout) => {
+  if (workout.date) { // Check if date is defined
+    return format(new Date(workout.date), 'yyyy-MM-dd') === formattedSelectedDate;
+  } else {
+    return false;
+  }
+});
 
   return (
     <div className="flex flex-col items-center">
