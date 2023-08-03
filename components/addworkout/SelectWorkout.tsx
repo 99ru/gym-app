@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Workout } from "../../utils/types";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../utils/firebase";
+/* import { db } from "../../utils/firebase"; */
 import { useAuth } from "../../auth/AuthProvider";
 import useWorkouts from "../../hooks/useWorkouts";
 import MuscleButton from "../MuscleButton";
@@ -16,7 +16,7 @@ type Props = {
 
 const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
   const { currentUser } = useAuth();
-  const { workouts: selectedWorkouts } = useWorkouts();
+  const { workouts: selectedWorkouts, saveWorkout } = useWorkouts();
 
   const [state, setState] = useState<{
     selectedMuscle: string | null;
@@ -38,7 +38,7 @@ const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
     setState({ selectedMuscle: muscle, open: true });
   }, []);
 
-  const handleAddWorkout = async (workout: Workout) => {
+  /*   const handleAddWorkout = async (workout: Workout) => {
     if (currentUser) {
       // Check if the workout exists in Firestore
       if (
@@ -56,6 +56,31 @@ const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
           collection(db, `users/${currentUser.uid}/workouts`),
           workoutWithSets
         );
+        handleDialogClose();
+        setIsAddingWorkout(false);
+      } else {
+        console.log("This workout has already been added");
+      }
+    } else {
+      throw new Error("No authenticated user");
+    }
+  }; */
+
+  const handleAddWorkout = async (workout: Workout) => {
+    if (currentUser) {
+      // Check if the workout exists in Firestore
+      if (
+        !selectedWorkouts.some(
+          (selectedWorkout) => selectedWorkout.id === workout.id
+        )
+      ) {
+        const workoutWithSets = {
+          ...workout,
+          sets: [{ reps: 0, weight: 0 }],
+          date: formatISO(new Date(), { representation: "date" }),
+        };
+
+        await saveWorkout(workoutWithSets); // Use saveWorkout instead of addDoc
         handleDialogClose();
         setIsAddingWorkout(false);
       } else {
