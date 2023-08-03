@@ -5,28 +5,24 @@ import { AuthContext } from "@/auth/AuthProvider";
 import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
 import { CgGym } from "react-icons/cg";
-import {BiDumbbell} from "react-icons/bi";
-
-
+import { BiDumbbell } from "react-icons/bi";
 
 export const Nav: React.FC = () => {
   const { currentUser } = useContext(AuthContext);
 
   return (
-   <nav className="bg-black fixed bottom-0 w-full md:relative md:top-0 md:bottom-auto">
-    <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div className="relative flex h-16 items-center justify-between">
-        <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-          <div className="flex-shrink-0 flex items-center">
-            <Link href="/">
-              <CgGym className="text-white" size={40} />
-            </Link>
+    <nav className="bg-black fixed bottom-0 w-full md:relative md:top-0 md:bottom-auto">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between">
+          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/">
+                <CgGym className="text-white" size={40} />
+              </Link>
+            </div>
           </div>
-          
-        </div>
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <div className="relative ml-3">
-            <Menu as="div" className="relative ml-3">
+          <div className="relative inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <Menu as="div" className="relative">
               <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
                 {currentUser?.photoURL ? (
                   <Image
@@ -55,7 +51,7 @@ export const Nav: React.FC = () => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="origin-top-right absolute right-0 md:top-full bottom-full w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <Menu.Items className="origin-bottom-right bottom-12 absolute right-0 md:origin-top-right md:bottom-auto md:top-full w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                   <Menu.Item>
                     {({ active }) => (
                       <button
@@ -74,10 +70,8 @@ export const Nav: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
-  </nav>
-);
-
+    </nav>
+  );
 };
 
 export default Nav;
