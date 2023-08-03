@@ -41,30 +41,30 @@ const SelectWorkout: React.FC<Props> = ({
     setState({ selectedMuscle: muscle, open: true });
   }, []);
 
-  const handleAddWorkout = async (workout: Workout) => {
-    if (currentUser) {
-      // Check if the workout exists in Firestore
-      if (
-        !selectedWorkouts.some(
-          (selectedWorkout) => selectedWorkout.id === workout.id
-        )
-      ) {
-        const workoutWithSets = {
-          ...workout,
-          sets: [{ reps: 0, weight: 0 }],
-          date: formatISO(selectedDate, { representation: "date" }), 
-        };
+const handleAddWorkout = async (workout: Workout) => {
+  if (currentUser) {
+    // Check if the workout exists in Firestore
+    if (
+      !selectedWorkouts.some(
+        (selectedWorkout) => selectedWorkout.id === workout.id && selectedWorkout.date === formatISO(selectedDate, { representation: "date" })
+      )
+    ) {
+      const workoutWithSets = {
+        ...workout,
+        sets: [{ reps: 0, weight: 0 }],
+        date: formatISO(selectedDate, { representation: "date" }), 
+      };
 
-        await saveWorkout(workoutWithSets); 
-        handleDialogClose();
-        setIsAddingWorkout(false);
-      } else {
-        console.log("This workout has already been added");
-      }
+      await saveWorkout(workoutWithSets); 
+      handleDialogClose();
+      setIsAddingWorkout(false);
     } else {
-      throw new Error("No authenticated user");
+      console.log("This workout has already been added on this date");
     }
-  };
+  } else {
+    throw new Error("No authenticated user");
+  }
+};
 
   const musclesGroups = [
     "Shoulders",
