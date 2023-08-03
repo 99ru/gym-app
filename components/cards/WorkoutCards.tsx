@@ -27,7 +27,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
     <div className="flex flex-col items-center">
       {filteredWorkouts.length === 0 ? (
         <h2 className="text-2xl text-center mt-4">
-          No workouts added. <br />Press the &quot;Add Workout&quot; button to begin.
+          No workouts added for this date. <br />Press the &quot;Workout&quot; button to begin.
         </h2>
       ) : (
         filteredWorkouts.map((workout: Workout) => (
