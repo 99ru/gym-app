@@ -15,23 +15,29 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
   const formattedSelectedDate = format(selectedDate, 'yyyy-MM-dd');
 
   // Filter the workouts based on the selected date
- const filteredWorkouts = workouts.filter((workout: Workout) => {
-  if (workout.date) { // Check if date is defined
-    return format(new Date(workout.date), 'yyyy-MM-dd') === formattedSelectedDate;
-  } else {
-    return false;
-  }
-});
+  const filteredWorkouts = workouts.filter((workout: Workout) => {
+    if (workout.date) { // Check if date is defined
+      return format(new Date(workout.date), 'yyyy-MM-dd') === formattedSelectedDate;
+    } else {
+      return false;
+    }
+  });
 
   return (
     <div className="flex flex-col items-center">
-      {filteredWorkouts.map((workout: Workout) => (
-        <SingleWorkoutCard
-          key={workout.id}
-          workout={workout}
-          onDelete={() => workout.docId && deleteWorkout(workout.docId)}
-        />
-      ))}
+      {filteredWorkouts.length === 0 ? (
+        <h2 className="text-2xl text-center mt-4">
+          No workouts added. <br />Press the &quot;Add Workout&quot; button to begin.
+        </h2>
+      ) : (
+        filteredWorkouts.map((workout: Workout) => (
+          <SingleWorkoutCard
+            key={workout.id}
+            workout={workout}
+            onDelete={() => workout.docId && deleteWorkout(workout.docId)}
+          />
+        ))
+      )}
     </div>
   );
 };

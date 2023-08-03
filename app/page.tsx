@@ -15,8 +15,7 @@ const Home: React.FC = () => {
   const workouts = workoutsData.workouts;
   const [showWelcomeMsg, setShowWelcomeMsg] = useState(false);
   const [isAddingWorkout, setIsAddingWorkout] = useState(false);
-
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // date picker
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   useEffect(() => {
     const isFirstLogin = localStorage.getItem("firstLogin") === null;
@@ -34,10 +33,9 @@ const Home: React.FC = () => {
     return <LoginPage />;
   }
 
-  return (
-    <>
+ return (
+    <div className="flex flex-col min-h-screen"> 
       <Nav />
-
       {isAddingWorkout && (
         <SelectWorkout
           workouts={workouts}
@@ -45,20 +43,19 @@ const Home: React.FC = () => {
           selectedDate={selectedDate}
         />
       )}
-
-      <Menu
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        setIsAddingWorkout={setIsAddingWorkout}
-      />
-      <WorkoutCards selectedDate={selectedDate} />
-
+      <main className="flex-grow"> 
+        <Menu
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          setIsAddingWorkout={setIsAddingWorkout}
+        />
+        <WorkoutCards selectedDate={selectedDate} />
+      </main>
       <Footer />
-
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />
       )}
-    </>
+    </div>
   );
 };
 
