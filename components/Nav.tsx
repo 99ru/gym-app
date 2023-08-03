@@ -7,12 +7,20 @@ import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
 import { GiGymBag } from "react-icons/gi";
 
-export function Nav() {
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+interface NavProps {
+   selectedDate: Date;
+   setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+}
+
+export const Nav: React.FC<NavProps> = ({ setSelectedDate, selectedDate }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <nav className="bg-dark">
+    <nav className="bg-black">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -34,7 +42,11 @@ export function Nav() {
                 <GiGymBag className="text-white h-10 w-auto" />
               </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:block"></div>
+            <div className="hidden sm:ml-6 sm:block">
+           <DatePicker selected={selectedDate} onChange={(date: Date) => setSelectedDate(date)} />
+
+
+            </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="relative ml-3">
@@ -96,6 +108,6 @@ export function Nav() {
       )}
     </nav>
   );
-}
+};
 
 export default Nav;

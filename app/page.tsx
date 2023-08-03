@@ -10,14 +10,16 @@ import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 
 const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
   const workouts = workoutsData.workouts;
   const [showWelcomeMsg, setShowWelcomeMsg] = useState(false);
   const [isAddingWorkout, setIsAddingWorkout] = useState(false);
+
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // date picker
+
 
   useEffect(() => {
     const isFirstLogin = localStorage.getItem("firstLogin") === null;
@@ -37,7 +39,9 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Nav />
+            <Nav selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+
+
       {!isAddingWorkout && (
         <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
       )}
@@ -48,10 +52,9 @@ const Home: React.FC = () => {
         />
       )}
       <div className="flex-grow">
-
-      <WorkoutCards />
-
+          <WorkoutCards selectedDate={selectedDate} />
       </div>
+
       <Footer />
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />

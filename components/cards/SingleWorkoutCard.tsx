@@ -133,6 +133,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 <p className="font-bold mr-1 truncate w-32 sm:w-auto">
                   {workout.name}
                 </p>
+                <p>{workout.date}</p>
                 <div className="flex items-center">
                   <p className="text-sm font-bold text-gray-700 mr-2">
                     Total sets: {workoutSets.length}

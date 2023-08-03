@@ -2,13 +2,27 @@ import React from "react";
 import useWorkouts from "@/hooks/useWorkouts";
 import SingleWorkoutCard from "./SingleWorkoutCard";
 import { Workout } from "@/utils/types";
+import { format } from "date-fns"; // import the format function from date-fns
 
-const WorkoutCards: React.FC = () => {
+interface WorkoutCardsProps {
+  selectedDate: Date;
+}
+
+const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
   const { workouts, deleteWorkout } = useWorkouts();
+  
+  // Format the selectedDate to "YYYY-MM-DD"
+  const formattedSelectedDate = format(selectedDate, 'yyyy-MM-dd');
+
+  // Filter the workouts based on the selected date
+  const filteredWorkouts = workouts.filter(
+    (workout: Workout) =>
+      format(new Date(workout.date), 'yyyy-MM-dd') === formattedSelectedDate
+  );
 
   return (
     <div className="flex flex-col items-center">
-      {workouts.map((workout: Workout) => (
+      {filteredWorkouts.map((workout: Workout) => (
         <SingleWorkoutCard
           key={workout.id}
           workout={workout}
