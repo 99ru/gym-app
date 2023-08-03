@@ -47,9 +47,10 @@ const Home: React.FC = () => {
           setIsAddingWorkout={setIsAddingWorkout}
         />
       )}
-      <div className="flex-grow">
+      
+      <main className="flex-grow">
         <WorkoutCards selectedDate={selectedDate} />
-      </div>
+      </main>
 
       <Footer />
       {showWelcomeMsg && (

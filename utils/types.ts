@@ -6,8 +6,3 @@ export type Workout = {
   date?: string;
   docId?: string; 
 };
-
-/* export type WorkoutSet = {
-  reps: number;
-  weight: number;
-}; */
