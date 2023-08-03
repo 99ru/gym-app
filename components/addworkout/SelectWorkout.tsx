@@ -1,7 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { Workout } from "../../utils/types";
-import { addDoc, collection } from "firebase/firestore";
-/* import { db } from "../../utils/firebase"; */
 import { useAuth } from "../../auth/AuthProvider";
 import useWorkouts from "../../hooks/useWorkouts";
 import MuscleButton from "../MuscleButton";
@@ -12,9 +10,14 @@ import { formatISO } from "date-fns";
 type Props = {
   workouts: Workout[];
   setIsAddingWorkout: (show: boolean) => void;
+  selectedDate: Date; 
 };
 
-const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
+const SelectWorkout: React.FC<Props> = ({
+  workouts,
+  setIsAddingWorkout,
+  selectedDate,
+}) => {
   const { currentUser } = useAuth();
   const { workouts: selectedWorkouts, saveWorkout } = useWorkouts();
 
@@ -38,34 +41,6 @@ const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
     setState({ selectedMuscle: muscle, open: true });
   }, []);
 
-  /*   const handleAddWorkout = async (workout: Workout) => {
-    if (currentUser) {
-      // Check if the workout exists in Firestore
-      if (
-        !selectedWorkouts.some(
-          (selectedWorkout) => selectedWorkout.id === workout.id
-        )
-      ) {
-        const workoutWithSets = {
-          ...workout,
-          sets: [{ reps: 0, weight: 0 }],
-          date: formatISO(new Date(), { representation: "date" }),
-        };
-
-        await addDoc(
-          collection(db, `users/${currentUser.uid}/workouts`),
-          workoutWithSets
-        );
-        handleDialogClose();
-        setIsAddingWorkout(false);
-      } else {
-        console.log("This workout has already been added");
-      }
-    } else {
-      throw new Error("No authenticated user");
-    }
-  }; */
-
   const handleAddWorkout = async (workout: Workout) => {
     if (currentUser) {
       // Check if the workout exists in Firestore
@@ -77,10 +52,10 @@ const SelectWorkout: React.FC<Props> = ({ workouts, setIsAddingWorkout }) => {
         const workoutWithSets = {
           ...workout,
           sets: [{ reps: 0, weight: 0 }],
-          date: formatISO(new Date(), { representation: "date" }),
+          date: formatISO(selectedDate, { representation: "date" }), 
         };
 
-        await saveWorkout(workoutWithSets); // Use saveWorkout instead of addDoc
+        await saveWorkout(workoutWithSets); 
         handleDialogClose();
         setIsAddingWorkout(false);
       } else {

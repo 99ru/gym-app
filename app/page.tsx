@@ -45,6 +45,7 @@ const Home: React.FC = () => {
         <SelectWorkout
           workouts={workouts}
           setIsAddingWorkout={setIsAddingWorkout}
+          selectedDate={selectedDate}
         />
       )}
       
