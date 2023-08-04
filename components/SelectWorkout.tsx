@@ -7,6 +7,18 @@ import WorkoutDialog from "./dialogs/SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
 import { formatISO } from "date-fns";
 
+// Define muscle groups as enums
+export enum MuscleGroups {
+  Shoulders = 'Shoulders',
+  Biceps = 'Biceps',
+  Triceps = 'Triceps',
+  Legs = 'Legs',
+  Back = 'Back',
+  Chest = 'Chest',
+  Abs = 'Abs',
+  FullBody = 'FullBody',
+}
+
 type Props = {
   workouts: Workout[];
   setIsAddingWorkout: (show: boolean) => void;
@@ -22,7 +34,7 @@ const SelectWorkout: React.FC<Props> = ({
   const { workouts: selectedWorkouts, saveWorkout } = useWorkouts();
 
   const [state, setState] = useState<{
-    selectedMuscle: string | null;
+    selectedMuscle: MuscleGroups | null;
     open: boolean;
   }>({ selectedMuscle: null, open: false });
 
@@ -37,45 +49,42 @@ const SelectWorkout: React.FC<Props> = ({
     setIsAddingWorkout(false);
   }, [setIsAddingWorkout]);
 
-  const handleMuscleButtonClick = useCallback((muscle: string) => {
+  const handleMuscleButtonClick = useCallback((muscle: MuscleGroups) => {
     setState({ selectedMuscle: muscle, open: true });
   }, []);
 
-const handleAddWorkout = async (workout: Workout) => {
-  if (currentUser) {
-    // Check if the workout exists in Firestore
-    if (
-      !selectedWorkouts.some(
-        (selectedWorkout) => selectedWorkout.id === workout.id && selectedWorkout.date === formatISO(selectedDate, { representation: "date" })
-      )
-    ) {
-      const workoutWithSets = {
-        ...workout,
-        sets: [{ reps: 0, weight: 0 }],
-        date: formatISO(selectedDate, { representation: "date" }), 
-      };
+  // Async function with error handling
+  const handleAddWorkout = useCallback(async (workout: Workout) => {
+    try {
+      if (currentUser) {
+        // Check if the workout exists in Firestore
+        if (
+          !selectedWorkouts.some(
+            (selectedWorkout) => selectedWorkout.id === workout.id && selectedWorkout.date === formatISO(selectedDate, { representation: "date" })
+          )
+        ) {
+          const workoutWithSets = {
+            ...workout,
+            sets: [{ reps: 0, weight: 0 }],
+            date: formatISO(selectedDate, { representation: "date" }), 
+          };
 
-      await saveWorkout(workoutWithSets); 
-      handleDialogClose();
-      setIsAddingWorkout(false);
-    } else {
-      alert("This workout has already been added");
+          await saveWorkout(workoutWithSets); 
+          handleDialogClose();
+          setIsAddingWorkout(false);
+        } else {
+          alert("This workout has already been added"); // Use a better notification system here
+        }
+      } else {
+        throw new Error("No authenticated user");
+      }
+    } catch (error) {
+      console.error(error); // Handle error appropriately
     }
-  } else {
-    throw new Error("No authenticated user");
-  }
-};
+  }, [currentUser, handleDialogClose, setIsAddingWorkout, selectedWorkouts, saveWorkout, selectedDate]);
 
-  const musclesGroups = [
-    "Shoulders",
-    "Biceps",
-    "Triceps",
-    "Legs",
-    "Back",
-    "Chest",
-    "Abs",
-    "Full Body",
-  ];
+  // Using enum to define muscle groups
+  const musclesGroups = Object.values(MuscleGroups);
 
   return (
     <section className="flex justify-center mt-20">

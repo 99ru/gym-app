@@ -1,7 +1,9 @@
+import { MuscleGroups } from './SelectWorkout';
+
 type MuscleButtonProps = {
-  muscle: string;
-  selectedMuscle: string | null;
-  onClick: (muscle: string) => void;
+  muscle: MuscleGroups;
+  selectedMuscle: MuscleGroups | null;
+  onClick: (muscle: MuscleGroups) => void;
 };
 
 const MuscleButton: React.FC<MuscleButtonProps> = ({
