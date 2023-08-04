@@ -4,15 +4,22 @@ import { AuthContext } from "@/auth/AuthProvider";
 import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
 import Calendar from "@/components/ui/Calendar";
-import {CgGym as GymIcon} from 'react-icons/cg';
-import AddWorkout from '@/components/ui/AddWorkout';
+import { CgGym as GymIcon } from "react-icons/cg";
+import AddWorkout from "@/components/ui/AddWorkout";
 
-const Nav: React.FC<{ selectedDate: Date; setSelectedDate: React.Dispatch<React.SetStateAction<Date>>, setIsAddingWorkout: (show: boolean) => void; }> = ({ selectedDate, setSelectedDate, setIsAddingWorkout }) => {
+const Nav: React.FC<{
+  selectedDate: Date;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  setIsAddingWorkout: (show: boolean) => void;
+}> = ({ selectedDate, setSelectedDate, setIsAddingWorkout }) => {
   const { currentUser } = useContext(AuthContext);
 
   return (
     <section className="flex justify-center items-center">
-      <nav className="flex justify-center items-center fixed top-2 z-50">
+     <nav className="flex justify-center items-center fixed md:top-2 md:bottom-auto pb-4 bottom-0 z-50">
+
+
+
         <div className="w-80 h-12  bg-black shadow-md rounded-full flex justify-between items-center px-5">
           <div>
             <span className="font-bold text-xl text-white">
@@ -21,7 +28,10 @@ const Nav: React.FC<{ selectedDate: Date; setSelectedDate: React.Dispatch<React.
           </div>
           <div className="flex space-x-4">
             <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
-            <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+            <Calendar
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
           </div>
           <Menu as="div" className="relative">
             <Menu.Button className="rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 mt-2">
@@ -43,15 +53,7 @@ const Nav: React.FC<{ selectedDate: Date; setSelectedDate: React.Dispatch<React.
                 />
               )}
             </Menu.Button>
-            <Transition
-              as={React.Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
+            <Transition as={React.Fragment}>
               <Menu.Items className="origin-top-right absolute right-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 mt-2">
                 <Menu.Item>
                   {({ active }) => (
