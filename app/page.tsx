@@ -1,11 +1,11 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
-import Nav from "@/components/Nav";
-import Footer from "@/components/footer";
+import Nav from "@/components/common/Nav";
+import Footer from "@/components/common/footer";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
 import SelectWorkout from "@/components/SelectWorkout";
 import WorkoutCards from "@/components/cards/WorkoutCards";
-import Menu from "@/components/ui/Menu";
+
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
@@ -33,9 +33,14 @@ const Home: React.FC = () => {
     return <LoginPage />;
   }
 
- return (
-    <div className="flex flex-col min-h-screen"> 
-      <Nav />
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Nav
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        setIsAddingWorkout={setIsAddingWorkout}
+      />
+
       {isAddingWorkout && (
         <SelectWorkout
           workouts={workouts}
@@ -43,14 +48,11 @@ const Home: React.FC = () => {
           selectedDate={selectedDate}
         />
       )}
-      <main className="flex-grow"> 
-        <Menu
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          setIsAddingWorkout={setIsAddingWorkout}
-        />
+      
+      <main className="flex-grow">
         <WorkoutCards selectedDate={selectedDate} />
       </main>
+
       <Footer />
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />

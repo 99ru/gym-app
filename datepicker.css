@@ -1,0 +1,41 @@
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Set the height of the container to fill the entire viewport */
+}
+
+.react-datepicker {
+  font-size: 1em !important;
+  width: 350px !important; 
+  height: 350px !important; 
+  display: flex;
+
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+
+.react-datepicker__header {
+  padding-top: 10px;
+  font-size: 1em !important;
+  background-color: white;
+}
+
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  width: 2em !important;
+  line-height: 2em !important;
+  margin: 0.3em !important;
+}
+
+.react-datepicker__month-select,
+.react-datepicker__day-select,
+.react-datepicker__year-select {
+  color: black !important;
+}

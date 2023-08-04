@@ -87,7 +87,7 @@ const SelectWorkout: React.FC<Props> = ({
   // Using enum to define muscle groups
   const musclesGroups = Object.values(MuscleGroups);
 
- return (
+   return (
     <Transition appear show={true} as={React.Fragment}>
       <Dialog
         as="div"
@@ -103,29 +103,34 @@ const SelectWorkout: React.FC<Props> = ({
             &#8203;
           </span>
           <div className="inline-block w-full max-w-2xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-            <Dialog.Title as="h1" className="font-bold text-2xl mb-6 text-center">
-              Select a muscle group
-            </Dialog.Title>
-            <div className="flex flex-wrap justify-center mb-6">
-              {musclesGroups.map((muscle) => (
-                <MuscleButton
-                  key={muscle}
-                  muscle={muscle}
-                  selectedMuscle={selectedMuscle}
-                  onClick={handleMuscleButtonClick}
-                />
-              ))}
-            </div>
+            {selectedMuscle === null ? (
+              <>
+                <Dialog.Title as="h1" className="font-bold text-2xl mb-6 text-center">
+                  Select a muscle group
+                </Dialog.Title>
+                <div className="flex flex-wrap justify-center mb-6">
+                  {musclesGroups.map((muscle) => (
+                    <MuscleButton
+                      key={muscle}
+                      muscle={muscle}
+                      selectedMuscle={selectedMuscle}
+                      onClick={handleMuscleButtonClick}
+                    />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <WorkoutDialog
+                open={open}
+                selectedMuscle={selectedMuscle}
+                workouts={workouts}
+                onClose={handleDialogClose}
+                onWorkoutClick={handleAddWorkout}
+              />
+            )}
             <IoCloseSharp
               onClick={handleDialogClose}
               className="absolute top-2 right-2 cursor-pointer text-2xl text-gray-500"
-            />
-            <WorkoutDialog
-              open={open}
-              selectedMuscle={selectedMuscle}
-              workouts={workouts}
-              onClose={handleDialogClose}
-              onWorkoutClick={handleAddWorkout}
             />
           </div>
         </div>

@@ -2,6 +2,11 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FcCalendar } from "react-icons/fc";
+import '@/datepicker.css';
+
+
+
+
 
 interface CalendarProps {
   selectedDate: Date;
@@ -13,19 +18,20 @@ interface CustomInputProps {
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({ onClick }) => (
-  <button onClick={onClick} className="calendar-icon flex flex-col items-center justify-center">
-    <FcCalendar size={40} />
-    <p className="text-center text-black text-m sm:text-1xl mb-5 font-bold">Date</p>
+  <button onClick={onClick} className="calendar-icon flex flex-col items-center">
+    <FcCalendar size={32} />
+    {/* <p className="text-center text-black text-m sm:text-1xl mb-5 font-bold">Date</p> */}
   </button>
 );
 
 const Calendar: React.FC<CalendarProps> = ({ selectedDate, setSelectedDate }) => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div>
       <DatePicker
         selected={selectedDate}
         onChange={(date: Date) => setSelectedDate(date)}
         customInput={<CustomInput />}
+        closeOnScroll={true}
       />
     </div>
   );
