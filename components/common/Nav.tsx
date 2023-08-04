@@ -51,7 +51,7 @@ const Nav: React.FC<{
               )}
             </Menu.Button>
             <Transition as={React.Fragment}>
-              <Menu.Items className="origin-top-right absolute md:top-12 top-auto md:bottom-auto bottom-12 right-0 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+              <Menu.Items className="origin-top-right absolute md:top-12 top-auto md:bottom-auto right-0 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                 <Menu.Item>
                   {({ active }) => (
                     <button

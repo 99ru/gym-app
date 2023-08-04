@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <section className="mt-12">
       <footer className="p-4 text-center items-center justify-center absolute inset-x-0 bottom-0 sm:block hidden">
-        <p className="text-lg mr-2">Project in progress🚀</p>
+        
         <a
           href="https://github.com/99ru/gym-app"
           target="_blank"
