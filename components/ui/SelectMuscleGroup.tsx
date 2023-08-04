@@ -17,7 +17,7 @@ export enum MuscleGroups {
   Back = 'Back',
   Chest = 'Chest',
   Abs = 'Abs',
-  FullBody = 'FullBody',
+  FullBody = 'Full Body',
 }
 
 type Props = {

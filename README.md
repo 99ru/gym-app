@@ -3,6 +3,8 @@ Project still in progress
 ![Alt Text](./public/screen.png)
 https://gym-planner-app.netlify.app/
 
+demo: https://gym-planner-app.netlify.app/
+
 ## Features
 1. User Authentication: Users can sign in using Google or as a guest.
 2. Workout Customization: Users can select their desired muscle group and exercise, and add them to their workout card.
