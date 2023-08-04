@@ -1,7 +1,6 @@
 Project still in progress 
 
 ![Alt Text](./public/screen.png)
-https://gym-planner-app.netlify.app/
 
 demo: https://gym-planner-app.netlify.app/
 
