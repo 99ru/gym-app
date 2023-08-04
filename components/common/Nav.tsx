@@ -17,7 +17,7 @@ const Nav: React.FC<{
   return (
     <section className="flex justify-center items-center">
       <nav className="flex justify-center items-center relative top-2">
-        <div className="w-96 h-12 bg-black shadow-md rounded-full flex justify-between items-center px-3">
+        <div className="w-96 h-12 bg-black shadow-md rounded-full flex justify-between items-center px-6">
           <div>
             <span className="font-bold text-xl text-white">
               <GymIcon size={40} />
