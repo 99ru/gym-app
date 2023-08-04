@@ -114,7 +114,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
   return (
     <>
       <Card
-        className="p-4 m-2 w-full sm:w-64 md:w-128 lg:w-160"
+        className="p-4 m-2 w-96 sm:w-96 md:w-128"
         style={{ boxShadow: "2px 2px 6px 3px #e3e6e8" }}
       >
         <CardBody className="flex flex-col items-start justify-between">
