@@ -2,7 +2,8 @@ import { FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="p-4 text-center flex items-center justify-center">
+  <section className="mt-12">
+    <footer className="p-4 text-center flex items-center justify-center absolute inset-x-0 bottom-0">
       <p className="text-lg mr-2">Project in progress🚀</p>
       <a
         href="https://github.com/99ru/gym-app"
@@ -13,6 +14,7 @@ const Footer = () => {
         <FaGithub size={24} />
       </a>
     </footer>
+     </section>
   );
 };
 

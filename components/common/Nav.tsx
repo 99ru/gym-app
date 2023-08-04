@@ -11,18 +11,16 @@ const Nav: React.FC<{ selectedDate: Date; setSelectedDate: React.Dispatch<React.
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <div className="flex justify-center items-center">
-      <nav className="flex justify-center items-center fixed top-4 z-50">
+    <section className="flex justify-center items-center">
+      <nav className="flex justify-center items-center fixed top-2 z-50">
         <div className="w-80 h-12  bg-black shadow-md rounded-full flex justify-between items-center px-5">
           <div>
             <span className="font-bold text-xl text-white">
               <GymIcon size={40} />
             </span>
           </div>
-          <div>
+          <div className="flex space-x-4">
             <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
-          </div>
-          <div>
             <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
           </div>
           <Menu as="div" className="relative">
@@ -72,7 +70,7 @@ const Nav: React.FC<{ selectedDate: Date; setSelectedDate: React.Dispatch<React.
           </Menu>
         </div>
       </nav>
-    </div>
+    </section>
   );
 };
 

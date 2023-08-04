@@ -1,4 +1,4 @@
-import { MuscleGroups } from './SelectWorkout';
+import { MuscleGroups } from './SelectMuscleGroup';
 
 type MuscleButtonProps = {
   muscle: MuscleGroups;

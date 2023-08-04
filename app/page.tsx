@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Nav from "@/components/common/Nav";
 import Footer from "@/components/common/footer";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
-import SelectWorkout from "@/components/SelectWorkout";
+import SelectMuscleGroup from "@/components/ui/SelectMuscleGroup";
 import WorkoutCards from "@/components/cards/WorkoutCards";
 
 import LoginPage from "../app/login/page";
@@ -34,30 +34,25 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen relative">
       <Nav
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
         setIsAddingWorkout={setIsAddingWorkout}
       />
-
       {isAddingWorkout && (
-        <SelectWorkout
+        <SelectMuscleGroup
           workouts={workouts}
           setIsAddingWorkout={setIsAddingWorkout}
           selectedDate={selectedDate}
         />
       )}
-
-     {/*  <main className="flex-grow"> */}
-        <WorkoutCards selectedDate={selectedDate} />
-    {/*   </main> */}
-
+      <WorkoutCards selectedDate={selectedDate} />
       <Footer />
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />
       )}
-    </div>
+    </main>
   );
 };
 

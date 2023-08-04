@@ -112,7 +112,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
   };
 
   return (
-    <div>
+    <>
       <Card
         className="p-4 m-2 w-full sm:w-64 md:w-128 lg:w-160"
         style={{ boxShadow: "2px 2px 6px 3px #e3e6e8" }}
@@ -245,7 +245,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
             onClose={() => setEditing(false)}
           />
         )}
-    </div>
+    </>
   );
 };
 

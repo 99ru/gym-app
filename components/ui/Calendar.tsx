@@ -4,10 +4,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FcCalendar } from "react-icons/fc";
 import '@/datepicker.css';
 
-
-
-
-
 interface CalendarProps {
   selectedDate: Date;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
@@ -25,14 +21,14 @@ const CustomInput: React.FC<CustomInputProps> = ({ onClick }) => (
 
 const Calendar: React.FC<CalendarProps> = ({ selectedDate, setSelectedDate }) => {
   return (
-    <div>
+    <section>
       <DatePicker
         selected={selectedDate}
         onChange={(date: Date) => setSelectedDate(date)}
         customInput={<CustomInput />}
         closeOnScroll={true}
       />
-    </div>
+    </section>
   );
 };
 

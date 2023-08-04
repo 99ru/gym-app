@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
-import { Workout } from "../utils/types";
-import { useAuth } from "../auth/AuthProvider";
-import useWorkouts from "../hooks/useWorkouts";
+import { Workout } from "../../utils/types";
+import { useAuth } from "../../auth/AuthProvider";
+import useWorkouts from "../../hooks/useWorkouts";
 import MuscleButton from "./MuscleButton";
-import WorkoutDialog from "./dialogs/SelectWorkoutDialog";
+import WorkoutDialog from "../dialogs/SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
 import { formatISO } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
