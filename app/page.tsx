@@ -48,10 +48,10 @@ const Home: React.FC = () => {
           selectedDate={selectedDate}
         />
       )}
-      
-      <main className="flex-grow">
+
+     {/*  <main className="flex-grow"> */}
         <WorkoutCards selectedDate={selectedDate} />
-      </main>
+    {/*   </main> */}
 
       <Footer />
       {showWelcomeMsg && (

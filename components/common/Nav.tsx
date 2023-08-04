@@ -12,8 +12,8 @@ const Nav: React.FC<{ selectedDate: Date; setSelectedDate: React.Dispatch<React.
 
   return (
     <div className="flex justify-center items-center">
-      <nav className="flex justify-center items-center fixed top-3 z-50">
-        <div className="w-80 h-10  bg-black shadow-md rounded-full flex justify-between items-center px-5">
+      <nav className="flex justify-center items-center fixed top-4 z-50">
+        <div className="w-80 h-12  bg-black shadow-md rounded-full flex justify-between items-center px-5">
           <div>
             <span className="font-bold text-xl text-white">
               <GymIcon size={40} />
@@ -26,7 +26,7 @@ const Nav: React.FC<{ selectedDate: Date; setSelectedDate: React.Dispatch<React.
             <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
           </div>
           <Menu as="div" className="relative">
-            <Menu.Button className="rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+            <Menu.Button className="rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 mt-2">
               {currentUser?.photoURL ? (
                 <Image
                   src={currentUser.photoURL}

@@ -8,9 +8,8 @@ type Props = {
 const AddWorkout: React.FC<Props> = ({ setIsAddingWorkout }) => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <button className="flex flex-col items-center justify-center" onClick={() => setIsAddingWorkout(true)}>
-        <FcAddDatabase size={40} className="cursor-pointer hover:opacity-70" />
-        {/* <p className="text-center text-black text-m sm:text-1xl mb-5 font-bold">Workout</p> */}
+      <button className="flex flex-col items-center justify-center transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" onClick={() => setIsAddingWorkout(true)}>
+        <FcAddDatabase size={36} className="cursor-pointer" />
       </button>
     </div>
   );
