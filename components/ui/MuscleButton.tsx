@@ -1,4 +1,4 @@
-import { MuscleGroups } from './SelectMuscleGroup';
+import { MuscleGroups } from '../dialogs/SelectMuscleGroup';
 
 type MuscleButtonProps = {
   muscle: MuscleGroups;
@@ -13,7 +13,7 @@ const MuscleButton: React.FC<MuscleButtonProps> = ({
 }) => (
   <button
     onClick={() => onClick(muscle)}
-    className={`bg-dark  text-white font-bold py-2 px-4 rounded m-2 min-w-[120px] text-center ${
+    className={`bg-black text-white font-bold py-2 px-4 rounded m-2 min-w-[120px] text-center ${
       selectedMuscle === muscle ? "bg-dark" : ""
     }`}
   >

@@ -2,11 +2,11 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -16,21 +16,27 @@ module.exports = {
       },
     },
     extend: {
-   
       spacing: {
-       '80': '20rem',
-        '96': '24rem',
-        '112': '28rem',
-        '128': '40rem',
+        80: "20rem",
+        96: "24rem",
+        112: "28rem",
+        128: "40rem",
+        144: "48rem",
       },
       colors: {
-      "dodgerblue": "#1E90FF",
-      "dark": "#191414",
-      "green": "#1DB954",
-      "light": "#ffffff80",
+        purpur: "#E6DFF1",
+        blub: "#C0DEDD",
+        pch: "#F1DFDE",
+        gry: "#363636",
+        drk: "#151515",
 
+        primary: "#YOUR_PRIMARY_COLOR",
+        "primary-foreground": "#YOUR_PRIMARY_FOREGROUND_COLOR",
+        accent: "#YOUR_ACCENT_COLOR",
+        "accent-foreground": "#YOUR_ACCENT_FOREGROUND_COLOR",
+        "muted-foreground": "#YOUR_MUTED_FOREGROUND_COLOR",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

@@ -4,7 +4,6 @@ import {
   WorkoutSet as WorkoutSetType,
 } from "../../utils/types";
 import Image from "next/image";
-import { Card, CardBody } from "@windmill/react-ui";
 import { Menu } from "@headlessui/react";
 import { FiChevronDown, FiChevronUp, FiMoreVertical } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
@@ -13,6 +12,11 @@ import EditWorkoutCard from "./EditWorkoutCard";
 import { db } from "@/utils/firebase";
 import { useAuth } from "@/auth/AuthProvider";
 import { updateDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card";
 
 type Props = {
   workout: WorkoutType;
@@ -76,7 +80,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
 
     const workoutSetsRef = doc(
       db,
-      `users/${currentUser?.uid}/workouts/${workout.docId}` 
+      `users/${currentUser?.uid}/workouts/${workout.docId}`
     );
 
     try {
@@ -113,34 +117,31 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
 
   return (
     <>
-      <Card
-        className="p-4 m-2 w-96 sm:w-96 md:w-128"
-        style={{ boxShadow: "2px 2px 6px 3px #e3e6e8" }}
-      >
-        <CardBody className="flex flex-col items-start justify-between">
-          <div className="flex items-center w-full justify-between">
-            <div className="flex items-center justify-start">
-              <div className="mr-4">
+      <Card className="bg-white p-4 m-2 sm:w-96 md:w-144">
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="md:mr-4">
                 <Image
                   src={workout.image}
                   alt={workout.name}
-                  width={70}
-                  height={70}
+                  width={90}
+                  height={90}
                   priority
                 />
               </div>
               <div>
-                <p className="font-bold mr-1 truncate w-32 sm:w-auto">
+                <p className="font-bold text-lg md:text-xl lg:text-2xl truncate">
                   {workout.name}
                 </p>
-                <p>{workout.date}</p>
+
                 <div className="flex items-center">
-                  <p className="text-sm font-bold text-gray-700 mr-2">
+                  <p className="text-sm md:text-lg lg:text-xl text-gray-700 mr-2">
                     Total sets: {workoutSets.length}
                   </p>
                   <button
                     onClick={() => setExpanded(!isExpanded)}
-                    className=" hover:bg-gray-200 rounded"
+                    className="hover:bg-gray-200 rounded"
                     aria-label="Toggle Expand"
                   >
                     {isExpanded ? (
@@ -154,8 +155,8 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
             </div>
 
             <div className="flex items-center">
-              <Menu as="div" className="relative ml-3">
-                <Menu.Button className="flex  bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 hover:bg-gray-200">
+              <Menu as="div" className="relative mt-6">
+                <Menu.Button>
                   <FiMoreVertical size={24} />
                 </Menu.Button>
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
@@ -180,12 +181,12 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
               {workoutSets.map((set, index) => (
                 <div
                   key={index}
-                  className="border-b text-black p-2 rounded-lg my-2 flex items-center justify-between space-x-2 "
+                  className="border-b text-black p-2 rounded-lg my-2 flex items-center justify-between space-x-2"
                 >
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Set</label>
                     <strong>
-                      <p className="text-base  max-w-full whitespace-nowrap">
+                      <p className="text-base max-w-full whitespace-nowrap">
                         {index + 1}
                       </p>
                     </strong>
@@ -193,7 +194,7 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Reps</label>
                     <strong>
-                      <p className="text-base  max-w-full whitespace-nowrap">
+                      <p className="text-base max-w-full whitespace-nowrap">
                         {set.reps}
                       </p>
                     </strong>
@@ -201,16 +202,12 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   <div className="flex flex-col items-center">
                     <label className="text-sm md:text-base">Weight</label>
                     <strong>
-                      <p className="text-base  max-w-full whitespace-nowrap">
+                      <p className="text-base max-w-full whitespace-nowrap">
                         {set.weight}kg
                       </p>
                     </strong>
                   </div>
-                  <button
-                    onClick={() => handleEditWorkoutSet(index)}
-                    className="p-2 hover:bg-gray-200 rounded" 
-                    aria-label="Edit Set"
-                  >
+                  <button onClick={() => handleEditWorkoutSet(index)}>
                     <BsFillPencilFill size={16} />
                   </button>
                 </div>
@@ -221,18 +218,19 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                   onClick={handleAddSet}
                 >
                   <IoAddCircle
-                    className=" hover:opacity-70 text-black mt-8"
+                    className="hover:opacity-70 text-black mt-8"
                     size={32}
                   />
-                  <h2 className="text-center uppercase sm:text-1xl mb-5">
+                  <h2 className="text-center uppercase text-base md:text-lg mb-5">
                     Add Set
                   </h2>
                 </div>
               </div>
             </div>
           )}
-        </CardBody>
+        </CardContent>
       </Card>
+
       {isEditing &&
         editingSetIndex !== null &&
         editingSetIndex < workoutSets.length && (

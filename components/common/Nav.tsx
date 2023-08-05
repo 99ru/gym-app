@@ -5,6 +5,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
 import Calendar from "@/components/ui/Calendar";
 import { CgGym as GymIcon } from "react-icons/cg";
+import {FcHome} from "react-icons/fc";
 import AddWorkout from "@/components/ui/AddWorkout";
 
 const Nav: React.FC<{
@@ -14,63 +15,64 @@ const Nav: React.FC<{
 }> = ({ selectedDate, setSelectedDate, setIsAddingWorkout }) => {
   const { currentUser } = useContext(AuthContext);
 
-  return (
-    <section className="flex justify-center items-center">
-      <nav className="flex justify-center items-center relative top-2">
-        <div className="w-96 h-12 bg-black shadow-md rounded-full flex justify-between items-center px-6">
-          <div>
-            <span className="font-bold text-xl text-white">
-              <GymIcon size={40} />
-            </span>
-          </div>
-          <div className="flex space-x-4">
-            <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
-            <Calendar
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
+ return (
+  <section className="fixed bottom-0 w-full h-12 md:top-0 md:left-0 md:w-full md:h-12 bg-black shadow-md">
+    <nav className="flex justify-between items-center px-8 w-full h-full md:flex-row md:justify-evenly">
+      <div>
+        <span className="font-bold text-xl text-white">
+          <GymIcon size={40} /> 
+        </span>
+      </div>
+      <div className="flex space-x-4 md:space-x-4 md:space-y-0 md:my-0">
+        <FcHome size={32} className="cursor-pointer mt-1.5" />
+        <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
+        <Calendar
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+      </div>
+      <Menu as="div" className="relative">
+        <Menu.Button className="rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 mt-2">
+          {currentUser?.photoURL ? (
+            <Image
+              src={currentUser.photoURL}
+              alt="User Icon"
+              width={32}
+              height={32}
+              className="rounded-full"
             />
-          </div>
-          <Menu as="div" className="relative">
-            <Menu.Button className="rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 mt-2">
-              {currentUser?.photoURL ? (
-                <Image
-                  src={currentUser.photoURL}
-                  alt="User Icon"
-                  width={30}
-                  height={30}
-                  className="rounded-full"
-                />
-              ) : (
-                <Image
-                  src="/guest.png"
-                  alt="User Icon"
-                  width={30}
-                  height={30}
-                  className="rounded-full"
-                />
+          ) : (
+            <Image
+              src="/fallback.png"
+              alt="User Icon"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+          )}
+        </Menu.Button>
+        <Transition as={React.Fragment}>
+          <Menu.Items className="origin-top-right absolute md:top-12 top-auto md:bottom-auto right-0 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${
+                    active ? "bg-gray-100" : ""
+                  } block w-full text-left px-4 py-2 text-sm text-gray-700`}
+                  onClick={() => auth.signOut()}
+                >
+                  Sign out
+                </button>
               )}
-            </Menu.Button>
-            <Transition as={React.Fragment}>
-              <Menu.Items className="origin-top-right absolute md:top-12 top-auto md:bottom-auto right-0 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active ? "bg-gray-100" : ""
-                      } block w-full text-left px-4 py-2 text-sm text-gray-700`}
-                      onClick={() => auth.signOut()}
-                    >
-                      Sign out
-                    </button>
-                  )}
-                </Menu.Item>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
-      </nav>
-    </section>
-  );
+            </Menu.Item>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+    </nav>
+  </section>
+);
+
+
 };
 
 export default Nav;

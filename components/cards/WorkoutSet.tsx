@@ -8,7 +8,7 @@ type Props = {
 
 const WorkoutSet: React.FC<Props> = ({ set, index,  }) => (
   <div
-    className="border-b text-black p-2 rounded-lg my-2 flex items-center justify-between space-x-2 "
+    className="border-b text-drk p-2 rounded-lg my-2 flex items-center justify-between space-x-2"
   >
     <div className="flex flex-col items-center">
       <label className="text-sm md:text-base">Set</label>
