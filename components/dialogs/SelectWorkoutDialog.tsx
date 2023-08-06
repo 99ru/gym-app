@@ -27,7 +27,7 @@ const WorkoutDialog: React.FC<WorkoutDialogProps> = ({
     >
       <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-      <div className="inline-block w-11/12 sm:w-3/4 max-w-md sm:max-w-xl lg:max-w-3xl p-6 overflow-y-auto text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl h-auto sm:h-3/4 lg:h-3/5 max-h-screen">
+      <div className="inline-block w-full max-w-3xl p-6 overflow-y-auto text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl h-auto max-h-screen">
         <div className="flex justify-end">
           <button
             onClick={onClose}
@@ -39,7 +39,7 @@ const WorkoutDialog: React.FC<WorkoutDialogProps> = ({
 
         <Dialog.Title
           as="h3"
-          className="text-lg font-bold leading-6 text-gray-900 mb-4"
+          className="text-xl font-bold leading-6 text-gray-900 mb-4"
         >
           {selectedMuscle} workouts
         </Dialog.Title>
@@ -64,7 +64,7 @@ const WorkoutDialog: React.FC<WorkoutDialogProps> = ({
                   />
                 </div>
                 <div>
-                  <p className="text-lg font-medium text-gray-900">
+                  <p className="text-base font-medium text-gray-900">
                     {workout.name}
                   </p>
                 </div>

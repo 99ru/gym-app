@@ -2,28 +2,28 @@ import React, { useState, useCallback } from "react";
 import { Workout } from "../../utils/types";
 import { useAuth } from "../../auth/AuthProvider";
 import useWorkouts from "../../hooks/useWorkouts";
-import MuscleButton from "./MuscleButton";
-import WorkoutDialog from "../dialogs/SelectWorkoutDialog";
+import MuscleButton from "../ui/MuscleButton";
+import WorkoutDialog from "./SelectWorkoutDialog";
 import { IoCloseSharp } from "react-icons/io5";
 import { formatISO } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
 
 // Define muscle groups as enums
 export enum MuscleGroups {
-  Shoulders = 'Shoulders',
-  Biceps = 'Biceps',
-  Triceps = 'Triceps',
-  Legs = 'Legs',
-  Back = 'Back',
-  Chest = 'Chest',
-  Abs = 'Abs',
-  FullBody = 'Full Body',
+  Shoulders = "Shoulders",
+  Biceps = "Biceps",
+  Triceps = "Triceps",
+  Legs = "Legs",
+  Back = "Back",
+  Chest = "Chest",
+  Abs = "Abs",
+  FullBody = "Full Body",
 }
 
 type Props = {
   workouts: Workout[];
   setIsAddingWorkout: (show: boolean) => void;
-  selectedDate: Date; 
+  selectedDate: Date;
 };
 
 const SelectWorkout: React.FC<Props> = ({
@@ -55,39 +55,51 @@ const SelectWorkout: React.FC<Props> = ({
   }, []);
 
   // Async function with error handling
-  const handleAddWorkout = useCallback(async (workout: Workout) => {
-    try {
-      if (currentUser) {
-        // Check if the workout exists in Firestore
-        if (
-          !selectedWorkouts.some(
-            (selectedWorkout) => selectedWorkout.id === workout.id && selectedWorkout.date === formatISO(selectedDate, { representation: "date" })
-          )
-        ) {
-          const workoutWithSets = {
-            ...workout,
-            sets: [{ reps: 0, weight: 0 }],
-            date: formatISO(selectedDate, { representation: "date" }), 
-          };
+  const handleAddWorkout = useCallback(
+    async (workout: Workout) => {
+      try {
+        if (currentUser) {
+          // Check if the workout exists in Firestore
+          if (
+            !selectedWorkouts.some(
+              (selectedWorkout) =>
+                selectedWorkout.id === workout.id &&
+                selectedWorkout.date ===
+                  formatISO(selectedDate, { representation: "date" })
+            )
+          ) {
+            const workoutWithSets = {
+              ...workout,
+              sets: [{ reps: 0, weight: 0 }],
+              date: formatISO(selectedDate, { representation: "date" }),
+            };
 
-          await saveWorkout(workoutWithSets); 
-          handleDialogClose();
-          setIsAddingWorkout(false);
+            await saveWorkout(workoutWithSets);
+            handleDialogClose();
+            setIsAddingWorkout(false);
+          } else {
+          }
         } else {
-          alert("This workout has already been added"); // Use a better notification system here
+          throw new Error("No authenticated user");
         }
-      } else {
-        throw new Error("No authenticated user");
+      } catch (error) {
+        console.error(error); // Handle error appropriately
       }
-    } catch (error) {
-      console.error(error); // Handle error appropriately
-    }
-  }, [currentUser, handleDialogClose, setIsAddingWorkout, selectedWorkouts, saveWorkout, selectedDate]);
+    },
+    [
+      currentUser,
+      handleDialogClose,
+      setIsAddingWorkout,
+      selectedWorkouts,
+      saveWorkout,
+      selectedDate,
+    ]
+  );
 
   // Using enum to define muscle groups
   const musclesGroups = Object.values(MuscleGroups);
 
-   return (
+  return (
     <Transition appear show={true} as={React.Fragment}>
       <Dialog
         as="div"
@@ -105,7 +117,10 @@ const SelectWorkout: React.FC<Props> = ({
           <div className="inline-block w-full max-w-2xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
             {selectedMuscle === null ? (
               <>
-                <Dialog.Title as="h1" className="font-bold text-2xl mb-6 text-center">
+                <Dialog.Title
+                  as="h1"
+                  className="font-bold text-2xl mb-6 text-center"
+                >
                   Select a muscle group
                 </Dialog.Title>
                 <div className="flex flex-wrap justify-center mb-6">

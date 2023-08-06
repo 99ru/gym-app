@@ -4,6 +4,7 @@ import SingleWorkoutCard from "./SingleWorkoutCard";
 import { Workout } from "@/utils/types";
 import { format } from "date-fns"; // import the format function from date-fns
 
+
 interface WorkoutCardsProps {
   selectedDate: Date;
 }
@@ -27,12 +28,15 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
   });
 
   return (
-      <div className="flex flex-col items-center mt-4">
+      <div className="flex flex-col items-center mt-4 mb-16 md:mt-24 md:mb-48">
+
         {filteredWorkouts.length === 0 ? (
           <h2 className="text-lg text-center mt-4">
             No workouts added for this date 📅
+            
           </h2>
         ) : (
+        
           filteredWorkouts.map((workout: Workout) => (
             <SingleWorkoutCard
               key={workout.id}
@@ -41,6 +45,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
             />
           ))
         )}
+        
       </div>
   );
 };

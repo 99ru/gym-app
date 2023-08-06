@@ -1,14 +1,17 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
+import Header from "@/components/common/Header";
 import Nav from "@/components/common/Nav";
 import Footer from "@/components/common/footer";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
-import SelectMuscleGroup from "@/components/ui/SelectMuscleGroup";
+import SelectMuscleGroup from "@/components/dialogs/SelectMuscleGroup";
 import WorkoutCards from "@/components/cards/WorkoutCards";
-
 import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
+
+
+
 
 const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
@@ -35,6 +38,7 @@ const Home: React.FC = () => {
 
   return (
     <main className="flex flex-col min-h-screen relative">
+      {/* <Header /> */}
       <Nav
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -47,8 +51,11 @@ const Home: React.FC = () => {
           selectedDate={selectedDate}
         />
       )}
+    
+
       <WorkoutCards selectedDate={selectedDate} />
-      <Footer />
+
+      {/* <Footer /> */}
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />
       )}
