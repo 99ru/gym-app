@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Workout as WorkoutType,
-  WorkoutSet as WorkoutSetType,
 } from "../../utils/types";
 import Image from "next/image";
 import { Menu } from "@headlessui/react";
@@ -9,9 +8,8 @@ import { FiChevronDown, FiChevronUp, FiMoreVertical } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IoAddCircle } from "react-icons/io5";
 import EditWorkoutCard from "./EditWorkoutCard";
-import { db } from "@/utils/firebase";
 import { useAuth } from "@/auth/AuthProvider";
-import { updateDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+import useWorkouts from "@/hooks/useWorkouts";
 
 import {
   Card,
@@ -28,96 +26,52 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [editingSetIndex, setEditingSetIndex] = useState<number | null>(null);
-  const [workoutSets, setWorkoutSets] = useState<WorkoutSetType[]>([]);
 
-  useEffect(() => {
-    if (currentUser) {
-      const unsubscribe = onSnapshot(
-        doc(db, `users/${currentUser.uid}/workouts/${workout.docId}`),
-        (doc) => {
-          const data = doc.data();
-          setWorkoutSets(data?.sets || []);
-        }
-      );
+  const {
+    loadWorkoutSets,
+    addSet,
+    updateSet,
+    deleteSet,
+    workoutSets
+  } = useWorkouts();
 
-      return () => unsubscribe();
+ useEffect(() => {
+    if (currentUser && workout.docId) { // Ensure workout.docId is defined
+        const unsubscribe = loadWorkoutSets(workout.docId);
+        return () => unsubscribe && unsubscribe();
     }
-  }, [workout.id, currentUser?.uid, db]);
+}, [workout.docId, currentUser?.uid]);
+
 
   const handleAddSet = async () => {
+    if (!workout.docId) return; 
     const newWorkoutSet = { reps: 0, weight: 0 };
-
-    // Add the new set to local state
-    setWorkoutSets((prevSets) => [...prevSets, newWorkoutSet]);
-
-    // Add the new set to Firestore
-    if (currentUser) {
-      const workoutRef = doc(
-        db,
-        `users/${currentUser.uid}/workouts/${workout.docId}`
-      );
-      await updateDoc(workoutRef, {
-        sets: [...workoutSets, newWorkoutSet],
-      });
-    } else {
-      throw new Error("No authenticated user");
-    }
-  };
+    await addSet(workout.docId, newWorkoutSet);
+};
 
   const handleEditWorkoutSet = (index: number) => {
     setEditingSetIndex(index);
     setEditing(true);
   };
 
-  const handleSaveSetChanges = async (newReps: number, newWeight: number) => {
-    const updatedWorkoutSets = [...workoutSets];
-    updatedWorkoutSets[editingSetIndex as number] = {
-      reps: newReps,
-      weight: newWeight,
-    };
-    setWorkoutSets(updatedWorkoutSets);
+ const handleSaveSetChanges = async (newReps: number, newWeight: number) => {
+    if (!workout.docId) return; 
+    await updateSet(workout.docId, editingSetIndex as number, {
+        reps: newReps,
+        weight: newWeight
+    });
     setEditing(false);
+};
 
-    const workoutSetsRef = doc(
-      db,
-      `users/${currentUser?.uid}/workouts/${workout.docId}`
-    );
-
-    try {
-      await setDoc(
-        workoutSetsRef,
-        { workoutId: workout.id, sets: updatedWorkoutSets },
-        { merge: true }
-      );
-    } catch (error) {
-      console.error("Error updating workout sets: ", error);
-    }
-  };
 
   const handleDeleteSet = async (setId: number) => {
-    const updatedWorkoutSets = workoutSets.filter(
-      (_, index) => index !== setId
-    );
-    setWorkoutSets(updatedWorkoutSets);
-
-    const workoutSetsRef = doc(
-      db,
-      `users/${currentUser?.uid}/workouts/${workout.docId}`
-    );
-    try {
-      await setDoc(
-        workoutSetsRef,
-        { workoutId: workout.id, sets: updatedWorkoutSets },
-        { merge: true }
-      );
-    } catch (error) {
-      console.error("Error updating workout sets: ", error);
-    }
-  };
+    if (!workout.docId) return; 
+    await deleteSet(workout.docId, setId);
+};
 
   return (
     <>
-      <Card className="bg-white p-4 m-2 sm:w-96 md:w-144">
+      <Card className="bg-pch p-4 m-2 sm:w-96 md:w-144">
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center">

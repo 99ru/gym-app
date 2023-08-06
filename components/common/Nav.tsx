@@ -5,7 +5,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
 import Calendar from "@/components/ui/Calendar";
 import { CgGym as GymIcon } from "react-icons/cg";
-import {FcHome} from "react-icons/fc";
+
 import AddWorkout from "@/components/ui/AddWorkout";
 
 const Nav: React.FC<{
@@ -24,7 +24,7 @@ const Nav: React.FC<{
         </span>
       </div>
       <div className="flex space-x-4 md:space-x-4 md:space-y-0 md:my-0">
-        <FcHome size={32} className="cursor-pointer mt-1.5" />
+      
         <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
         <Calendar
           selectedDate={selectedDate}

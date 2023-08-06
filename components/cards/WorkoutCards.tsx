@@ -4,6 +4,7 @@ import SingleWorkoutCard from "./SingleWorkoutCard";
 import { Workout } from "@/utils/types";
 import { format } from "date-fns"; // import the format function from date-fns
 
+
 interface WorkoutCardsProps {
   selectedDate: Date;
 }
