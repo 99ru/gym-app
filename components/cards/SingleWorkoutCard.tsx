@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Workout as WorkoutType,
-} from "../../utils/types";
+import { Workout as WorkoutType } from "../../utils/types";
 import Image from "next/image";
 import { Menu } from "@headlessui/react";
 import { FiChevronDown, FiChevronUp, FiMoreVertical } from "react-icons/fi";
@@ -10,11 +8,8 @@ import { IoAddCircle } from "react-icons/io5";
 import EditWorkoutCard from "./EditWorkoutCard";
 import { useAuth } from "@/auth/AuthProvider";
 import useWorkouts from "@/hooks/useWorkouts";
-
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { getColorFromClass } from "@/utils/colorUtil";
 
 type Props = {
   workout: WorkoutType;
@@ -26,52 +21,52 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [editingSetIndex, setEditingSetIndex] = useState<number | null>(null);
+  const [cardColor, setCardColor] = useState<string>("");
+  const { loadWorkoutSets, addSet, updateSet, deleteSet, workoutSets } =
+    useWorkouts();
 
-  const {
-    loadWorkoutSets,
-    addSet,
-    updateSet,
-    deleteSet,
-    workoutSets
-  } = useWorkouts();
-
- useEffect(() => {
-    if (currentUser && workout.docId) { // Ensure workout.docId is defined
-        const unsubscribe = loadWorkoutSets(workout.docId);
-        return () => unsubscribe && unsubscribe();
+  useEffect(() => {
+    if (currentUser && workout.docId) {
+      // Ensure workout.docId is defined
+      const unsubscribe = loadWorkoutSets(workout.docId);
+      return () => unsubscribe && unsubscribe();
     }
-}, [workout.docId, currentUser?.uid]);
+  }, [workout.docId, currentUser?.uid]);
 
+  useEffect(() => {
+    if (!cardColor) {
+      setCardColor(getColorFromClass(workout.docId));
+    }
+  }, []);
 
   const handleAddSet = async () => {
-    if (!workout.docId) return; 
+    if (!workout.docId) return;
     const newWorkoutSet = { reps: 0, weight: 0 };
     await addSet(workout.docId, newWorkoutSet);
-};
+  };
 
   const handleEditWorkoutSet = (index: number) => {
     setEditingSetIndex(index);
     setEditing(true);
   };
 
- const handleSaveSetChanges = async (newReps: number, newWeight: number) => {
-    if (!workout.docId) return; 
+  const handleSaveSetChanges = async (newReps: number, newWeight: number) => {
+    if (!workout.docId) return;
     await updateSet(workout.docId, editingSetIndex as number, {
-        reps: newReps,
-        weight: newWeight
+      reps: newReps,
+      weight: newWeight,
     });
     setEditing(false);
-};
-
+  };
 
   const handleDeleteSet = async (setId: number) => {
-    if (!workout.docId) return; 
+    if (!workout.docId) return;
     await deleteSet(workout.docId, setId);
-};
+  };
 
   return (
     <>
-      <Card className="bg-pch p-4 m-2 sm:w-96 md:w-144">
+      <Card className={`${cardColor} p-4 m-2 sm:w-96 md:w-144`}>
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center">

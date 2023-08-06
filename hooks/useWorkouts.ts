@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { Workout, WorkoutSet as WorkoutSetType } from "@/utils/types";
 import { db } from "@/utils/firebase";
-import { doc, addDoc, collection, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  addDoc,
+  collection,
+  onSnapshot,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { useAuth } from "@/auth/AuthProvider";
 
 const useWorkouts = () => {
@@ -11,7 +18,10 @@ const useWorkouts = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const workoutsCollection = collection(db, `users/${currentUser.uid}/workouts`);
+      const workoutsCollection = collection(
+        db,
+        `users/${currentUser.uid}/workouts`
+      );
       const unsubscribe = onSnapshot(workoutsCollection, (snapshot) => {
         const fetchedWorkouts = snapshot.docs.map((doc) => ({
           docId: doc.id,
@@ -32,24 +42,24 @@ const useWorkouts = () => {
         setWorkoutSets(data?.sets || []);
       });
 
-      return unsubscribe; // This allows for cleanup on component unmount
+      return unsubscribe;
     }
   };
 
   const addSet = async (docId: string, newSet: WorkoutSetType) => {
     if (!currentUser) throw new Error("No authenticated user");
-
-    // Update local state
-    setWorkoutSets(prevSets => [...prevSets, newSet]);
-
-    // Update Firestore
+    setWorkoutSets((prevSets) => [...prevSets, newSet]);
     const workoutRef = doc(db, `users/${currentUser.uid}/workouts/${docId}`);
     await updateDoc(workoutRef, {
       sets: [...workoutSets, newSet],
     });
   };
 
-const updateSet = async (docId: string, index: number, updatedSet: WorkoutSetType) => {
+  const updateSet = async (
+    docId: string,
+    index: number,
+    updatedSet: WorkoutSetType
+  ) => {
     if (!currentUser) throw new Error("No authenticated user");
 
     const updatedWorkoutSets = [...workoutSets];
@@ -60,7 +70,7 @@ const updateSet = async (docId: string, index: number, updatedSet: WorkoutSetTyp
     await updateDoc(workoutRef, {
       sets: updatedWorkoutSets,
     });
-};
+  };
 
   const deleteSet = async (docId: string, setId: number) => {
     if (!currentUser) throw new Error("No authenticated user");
@@ -79,7 +89,9 @@ const updateSet = async (docId: string, index: number, updatedSet: WorkoutSetTyp
 
     const docRef = doc(db, `users/${currentUser.uid}/workouts`, docId);
     await deleteDoc(docRef);
-    setWorkouts(prevWorkouts => prevWorkouts.filter(workout => workout.docId !== docId));
+    setWorkouts((prevWorkouts) =>
+      prevWorkouts.filter((workout) => workout.docId !== docId)
+    );
   };
 
   const saveWorkout = async (workout: Workout) => {
@@ -89,7 +101,16 @@ const updateSet = async (docId: string, index: number, updatedSet: WorkoutSetTyp
     await addDoc(docRef, workout);
   };
 
-  return { workouts, workoutSets, loadWorkoutSets, addSet, updateSet, deleteSet, deleteWorkout, saveWorkout };
+  return {
+    workouts,
+    workoutSets,
+    loadWorkoutSets,
+    addSet,
+    updateSet,
+    deleteSet,
+    deleteWorkout,
+    saveWorkout,
+  };
 };
 
 export default useWorkouts;

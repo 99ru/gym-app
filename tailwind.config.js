@@ -24,11 +24,20 @@ module.exports = {
         144: "48rem",
       },
       colors: {
+       // card colors
         purpur: "#E6DFF1",
         blub: "#C0DEDD",
         pch: "#F1DFDE",
+        antiquewhite: "#faebd7",
+        beige: "#F5F5DC",
+        azure: "#F0FFFF",
+        aliceblue: "#F0F8FF", 
+        bisque: "#FFE4C4",
+        
+        // backgrounds
         gry: "#363636",
         drk: "#151515",
+        whitesmoke: "#F5F5F5",
 
         primary: "#YOUR_PRIMARY_COLOR",
         "primary-foreground": "#YOUR_PRIMARY_FOREGROUND_COLOR",
