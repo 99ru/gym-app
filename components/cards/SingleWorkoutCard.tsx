@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Workout as WorkoutType } from "../../utils/types";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Menu } from "@headlessui/react";
 import { FiChevronDown, FiChevronUp, FiMoreVertical } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
@@ -70,17 +70,16 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <div className="md:mr-4">
+              <div className="mr-8 md:mr-8">
                 <Image
                   src={workout.image}
                   alt={workout.name}
-                  width={90}
-                  height={90}
-                  priority
+                  width={70}
+                  height={70}
                 />
               </div>
               <div>
-                <p className="font-bold text-lg md:text-xl lg:text-2xl truncate">
+                <p className="font-bold text-lg md:text-xl lg:text-1xl truncate w-40 sm:w-56">
                   {workout.name}
                 </p>
 
