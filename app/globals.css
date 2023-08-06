@@ -2,20 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --colors-purpur: #E6DFF1;
-  --colors-blub: #C0DEDD;
-  --colors-peach: #F1DFDE;
-  --colors-gray: #363636;
-  --colors-drk: #151515;
-}
-
-body {
-  /* background: linear-gradient(to bottom, var(--colors-gray), var(--colors-drk)); */
-  background: var(--colors-drk);
-  background-color: whitesmoke;
-}
-
 html {
   scroll-behavior: smooth;
 }
+

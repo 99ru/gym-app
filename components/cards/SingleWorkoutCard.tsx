@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Workout as WorkoutType } from "../../utils/types";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Menu } from "@headlessui/react";
 import { FiChevronDown, FiChevronUp, FiMoreVertical } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
@@ -10,6 +10,8 @@ import { useAuth } from "@/auth/AuthProvider";
 import useWorkouts from "@/hooks/useWorkouts";
 import { Card, CardContent } from "@/components/ui/card";
 import { getColorFromClass } from "@/utils/colorUtil";
+import { Switch } from "@/components/ui/switch"
+
 
 type Props = {
   workout: WorkoutType;
@@ -33,11 +35,12 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
     }
   }, [workout.docId, currentUser?.uid]);
 
-  useEffect(() => {
-    if (!cardColor) {
+ useEffect(() => {
+  if (!cardColor) {
       setCardColor(getColorFromClass(workout.docId));
-    }
-  }, []);
+  }
+}, []);
+
 
   const handleAddSet = async () => {
     if (!workout.docId) return;
@@ -82,10 +85,11 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 <p className="font-bold text-lg md:text-xl lg:text-1xl truncate w-40 sm:w-56">
                   {workout.name}
                 </p>
+                
 
                 <div className="flex items-center">
-                  <p className="text-sm md:text-lg lg:text-xl text-gray-700 mr-2">
-                    Total sets: {workoutSets.length}
+                  <p className="text-sm md:text-lg text-gray-700 mr-2">
+                    Total Sets: {workoutSets.length}
                   </p>
                   <button
                     onClick={() => setExpanded(!isExpanded)}

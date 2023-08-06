@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
-  content: [
+  darkMode: 'class',
+content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-  ],
+],
   theme: {
     container: {
       center: true,
@@ -24,7 +24,7 @@ module.exports = {
         144: "48rem",
       },
       colors: {
-       // card colors
+        // card colors
         purpur: "#E6DFF1",
         blub: "#C0DEDD",
         pch: "#F1DFDE",
@@ -38,7 +38,8 @@ module.exports = {
         gry: "#363636",
         drk: "#151515",
         whitesmoke: "#F5F5F5",
-
+        
+        // Placeholder colors, make sure to replace or remove them
         primary: "#YOUR_PRIMARY_COLOR",
         "primary-foreground": "#YOUR_PRIMARY_FOREGROUND_COLOR",
         accent: "#YOUR_ACCENT_COLOR",

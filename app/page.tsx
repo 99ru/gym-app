@@ -51,8 +51,10 @@ const Home: React.FC = () => {
           selectedDate={selectedDate}
         />
       )}
+    
+
       <WorkoutCards selectedDate={selectedDate} />
-      
+
       {/* <Footer /> */}
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />
