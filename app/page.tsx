@@ -10,9 +10,6 @@ import LoginPage from "../app/login/page";
 import workoutsData from "../utils/workouts.json";
 import { AuthContext, AuthProvider } from "../auth/AuthProvider";
 
-
-
-
 const Home: React.FC = () => {
   const { currentUser, loading } = useContext(AuthContext);
   const workouts = workoutsData.workouts;
@@ -51,11 +48,8 @@ const Home: React.FC = () => {
           selectedDate={selectedDate}
         />
       )}
-    
-
       <WorkoutCards selectedDate={selectedDate} />
-
-      {/* <Footer /> */}
+      <Footer />
       {showWelcomeMsg && (
         <WelcomeDialog onClose={() => setShowWelcomeMsg(false)} />
       )}
