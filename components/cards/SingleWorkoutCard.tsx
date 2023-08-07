@@ -9,16 +9,14 @@ import EditWorkoutCard from "./EditWorkoutCard";
 import { useAuth } from "@/auth/AuthProvider";
 import useWorkouts from "@/hooks/useWorkouts";
 import { Card, CardContent } from "@/components/ui/card";
-import { getColorFromClass } from "@/utils/colorUtil";
-import { Switch } from "@/components/ui/switch"
-
 
 type Props = {
   workout: WorkoutType;
   onDelete: (id: any) => void;
+  index: number;
 };
 
-const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
+const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete, index }) => {
   const { currentUser } = useAuth();
   const [isExpanded, setExpanded] = useState(false);
   const [isEditing, setEditing] = useState(false);
@@ -34,13 +32,6 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
       return () => unsubscribe && unsubscribe();
     }
   }, [workout.docId, currentUser?.uid]);
-
- useEffect(() => {
-  if (!cardColor) {
-      setCardColor(getColorFromClass(workout.docId));
-  }
-}, []);
-
 
   const handleAddSet = async () => {
     if (!workout.docId) return;
@@ -67,9 +58,14 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
     await deleteSet(workout.docId, setId);
   };
 
+  const getBackgroundColor = (idx: number) => {
+    const colors = ["bg-purpur", "bg-blub", "bg-pch"];
+    return colors[idx % 3];
+  };
+
   return (
     <>
-      <Card className={`${cardColor} p-4 m-2 sm:w-96 md:w-144`}>
+      <Card className={`${getBackgroundColor(index)} p-4 m-2 sm:w-96 md:w-144`}>
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -85,7 +81,6 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete }) => {
                 <p className="font-bold text-lg md:text-xl lg:text-1xl truncate w-40 sm:w-56">
                   {workout.name}
                 </p>
-                
 
                 <div className="flex items-center">
                   <p className="text-sm md:text-lg text-gray-700 mr-2">
