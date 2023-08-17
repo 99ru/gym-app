@@ -12,7 +12,7 @@ const Footer = () => {
           className="text-black flex items-center"
         >
           <FaGithub size={24} />
-          <span className="ml-2">Github</span>
+          <span className="ml-2">In progress</span>
         </a>
       </footer>
     </section>

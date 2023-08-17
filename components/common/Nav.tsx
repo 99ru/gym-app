@@ -5,8 +5,8 @@ import { Menu, Transition } from "@headlessui/react";
 import { auth } from "@/utils/firebase";
 import Calendar from "@/components/ui/Calendar";
 import { CgGym as GymIcon } from "react-icons/cg";
-
 import AddWorkout from "@/components/ui/AddWorkout";
+
 
 const Nav: React.FC<{
   selectedDate: Date;
@@ -18,13 +18,14 @@ const Nav: React.FC<{
  return (
   <section className="fixed bottom-0 w-full h-12 md:top-0 md:left-0 md:w-full md:h-12 bg-black shadow-md">
     <nav className="flex justify-between items-center px-8 w-full h-full md:flex-row md:justify-evenly">
-      <div>
+      <div className="flex items-center gap-1">
         <span className="font-bold text-xl text-white">
           <GymIcon size={40} /> 
         </span>
+        <span className="text-white">GETFIT</span>
       </div>
       <div className="flex space-x-4 md:space-x-4 md:space-y-0 md:my-0">
-      
+
         <AddWorkout setIsAddingWorkout={setIsAddingWorkout} />
         <Calendar
           selectedDate={selectedDate}
@@ -72,8 +73,6 @@ const Nav: React.FC<{
     </nav>
   </section>
 );
-
-
 };
 
 export default Nav;

@@ -21,20 +21,18 @@ const SingleWorkoutCard: React.FC<Props> = ({ workout, onDelete, index }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [editingSetIndex, setEditingSetIndex] = useState<number | null>(null);
-  const [cardColor, setCardColor] = useState<string>("");
   const { loadWorkoutSets, addSet, updateSet, deleteSet, workoutSets } =
     useWorkouts();
 
   useEffect(() => {
     if (currentUser && workout.docId) {
-      // Ensure workout.docId is defined
       const unsubscribe = loadWorkoutSets(workout.docId);
       return () => unsubscribe && unsubscribe();
     }
   }, [workout.docId, currentUser?.uid]);
 
   const handleAddSet = async () => {
-    if (!workout.docId) return;
+    if (!workout.docId) return;       
     const newWorkoutSet = { reps: 0, weight: 0 };
     await addSet(workout.docId, newWorkoutSet);
   };

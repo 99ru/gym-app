@@ -1,6 +1,5 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
-import Header from "@/components/common/Header";
 import Nav from "@/components/common/Nav";
 import Footer from "@/components/common/footer";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
@@ -35,7 +34,6 @@ const Home: React.FC = () => {
 
   return (
     <main className="flex flex-col min-h-screen relative">
-      {/* <Header /> */}
       <Nav
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}

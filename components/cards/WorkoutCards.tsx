@@ -10,14 +10,10 @@ interface WorkoutCardsProps {
 
 const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
   const { workouts, deleteWorkout } = useWorkouts();
-
-  // Format the selectedDate to "YYYY-MM-DD"
   const formattedSelectedDate = format(selectedDate, "yyyy-MM-dd");
 
-  // Filter the workouts based on the selected date
   const filteredWorkouts = workouts.filter((workout: Workout) => {
     if (workout.date) {
-      // Check if date is defined
       return (
         format(new Date(workout.date), "yyyy-MM-dd") === formattedSelectedDate
       );
@@ -31,7 +27,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ selectedDate }) => {
 
         {filteredWorkouts.length === 0 ? (
           <h2 className="text-lg text-center mt-4">
-            No workouts added for this date 📅
+            No workouts added for this date.
           </h2>
         ) : (
         
